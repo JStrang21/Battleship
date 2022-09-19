@@ -27,9 +27,25 @@ function shipFactory(length) {
 }
 
 function gameboardFactory() {
-    const board = [];
+    const board = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                   0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                   0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                   0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                   0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                   0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                   0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                   0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                   0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ];
+    const playerOne = playerFactory();
+    for (let ship in playerOne) {
+        
+    }
     
 }
+
+let ship = shipFactory(2);
+
 
 function playerFactory() {
     let lengths = [2, 3, 3, 4, 5]
@@ -42,7 +58,7 @@ function playerFactory() {
 }
 
 let playerOne = playerFactory();
-console.log(playerOne)
+console.log(playerOne[4])
 
 
 /*for (let i = 0; i <= shipTwo.shipLength.length - 1; i++) {
@@ -50,7 +66,7 @@ console.log(playerOne)
 }
 console.log(shipTwo.isSunk())*/
 
-export {shipFactory, playerFactory}
+export {shipFactory, playerFactory, gameboardFactory}
 
 
 

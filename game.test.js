@@ -1,4 +1,4 @@
-import {shipFactory, playerFactory} from './ship.js';
+import {shipFactory, playerFactory, gameboardFactory} from './ship.js';
 
 
 test('factory creates ship with appropriate length', () => {
@@ -38,3 +38,17 @@ test('only sunk when all spots are hit', () => {
     ship.hit(0);
     expect(ship.isSunk()).toBeFalsy();
 })
+
+test('player factory creates five ships', () => {
+    expect(playerFactory().length).toBe(5)
+})
+
+test('player factory returns array of ships')
+
+test('gameboard creates 10x10 board')
+
+test('gameboard randomly places player ships')
+
+test('gameboard updates when ship is hit')
+
+test('gameboard ')
