@@ -29,11 +29,20 @@ function shipFactory(length) {
 
 let playerOne = []
 
-let ship = shipFactory(3);
-ship.hit(0);
-ship.hit(2);
-ship.hit(1);
+let shipOne = shipFactory(3);
+let shipTwo = shipFactory(4);
+let shipThree = shipFactory(2);
+console.log(shipOne)
+
+/*for (let i = 0; i <= shipTwo.shipLength.length - 1; i++) {
+    shipTwo.hit(i)
+}
+console.log(shipTwo.isSunk())*/
+
+export {shipFactory}
 
 
 
-console.log(shipTwo.isSunk())
+
+
+
