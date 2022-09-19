@@ -21,26 +21,36 @@ function shipFactory(length) {
                 return isShipSunk = false;
             }
         }
-        isShipSunk = true;
-        return isShipSunk
+        return isShipSunk = true;
     }
     return {hit, shipLength, isSunk}
 }
 
-let playerOne = []
+function gameboardFactory() {
+    const board = [];
+    
+}
 
-let shipOne = shipFactory(3);
-let shipTwo = shipFactory(4);
-let shipThree = shipFactory(2);
-shipOne.hit(1)
-console.log(shipOne)
+function playerFactory() {
+    let lengths = [2, 3, 3, 4, 5]
+    let ships = [];
+    for (let i in lengths) {
+        let newShip = shipFactory(lengths[i]);
+        ships.push(newShip);
+    }
+    return ships
+}
+
+let playerOne = playerFactory();
+console.log(playerOne)
+
 
 /*for (let i = 0; i <= shipTwo.shipLength.length - 1; i++) {
     shipTwo.hit(i)
 }
 console.log(shipTwo.isSunk())*/
 
-export {shipFactory}
+export {shipFactory, playerFactory}
 
 
 

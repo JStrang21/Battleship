@@ -1,9 +1,14 @@
-import {shipFactory} from './ship.js';
+import {shipFactory, playerFactory} from './ship.js';
 
 
 test('factory creates ship with appropriate length', () => {
     const ship = shipFactory(3);
     expect(ship.shipLength.length).toBe(3)
+})
+
+test('factory initializes ship length array to zeros', () => {
+    const ship = shipFactory(3);
+    expect(ship.shipLength).toStrictEqual([0,0,0])
 })
 
 test('hit on ship at correct spot', () => {
