@@ -32,6 +32,7 @@ let playerOne = []
 let shipOne = shipFactory(3);
 let shipTwo = shipFactory(4);
 let shipThree = shipFactory(2);
+shipOne.hit(1)
 console.log(shipOne)
 
 /*for (let i = 0; i <= shipTwo.shipLength.length - 1; i++) {
