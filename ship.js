@@ -45,28 +45,36 @@ function gameboardFactory() {
                  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ];
+                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,];
         
     const playerOne = playerFactory();
-    for (let ship in playerOne) {
-        placement(board, playerOne[ship])
+    let random = getRandom(0, board.length - 1)
+    placement(board, playerOne[0], random);
+
+    /*for (let ship in playerOne) {
         let random = getRandom(0, board.length - 1)
+        placement(board, playerOne[ship], random)
         for (let i = 0; i <= playerOne[ship].shipLength.length - 1; i++) {
-            if (board[random] === 0 /*&& placement(board, playerOne[ship])*/) {
+            if (board[random] === 0 && placement(board, playerOne[ship], random)) {
                 //Check if space for vertical or horizontal placement
                 board[random] = playerOne[ship];
             }
         }
-    }
-    /*playerOne[0].hit(0)
-    playerOne[0].hit(1)
-    board[0] = playerOne[0].shipLength[0];
-    board[1] = playerOne[0].shipLength[1];*/
+    }*/
     return board;
 }
 
-function placement(board, ship) {
-    
+function placement(board, ship, random) {
+    if (board[random] !== 0) {
+        return false
+    }
+    let testShipLength = ship.shipLength.length
+    for (let i = 0; i <= testShipLength - 1; i++) {
+        //Could use another random number to randomly select up/down/left/right
+        if (board[random + i] === 0) {
+            board[random + i] = ship;
+        }
+    }
 }
 
 function getRandom(min, max) {
@@ -90,7 +98,7 @@ let playerOne = playerFactory();
 //console.log(playerOne[4].shipLength[1])
 
 let gametest = gameboardFactory();
-//console.log(gametest)
+console.table(gametest)
 
 
 
