@@ -104,10 +104,10 @@ function checkTop(board, random, shipsLength, ship) {
     if (board[random] !== 0) {
         return false
     }
-    let increment;
-    for (let i = 0; i <=  shipsLength; i++) {
+    let increment = 0;
+    for (let i = 0; i <=  shipsLength - 1; i++) {
         if (board[random + increment] === 0) {
-            board[random + increment] = ship.shipLength[i];
+            board[random + increment] = ship;
             increment += -10;
         }
         else if (board[random + increment] !== 0) {
@@ -119,10 +119,10 @@ function checkBottom(board, random, shipsLength, ship) {
     if (board[random] !== 0) {
         return false
     }
-    let increment;
-    for (let i = 0; i <=  shipsLength; i++) {
+    let increment = 0;
+    for (let i = 0; i <=  shipsLength - 1; i++) {
         if (board[random + increment] === 0) {
-            board[random + increment] = ship.shipLength[i];
+            board[random + increment] = ship;
             increment += 10;
         }
         else if (board[random + increment] !== 0) {
@@ -134,10 +134,10 @@ function checkLeft(board, random, shipsLength, ship) {
     if (board[random] !== 0) {
         return false
     }
-    let increment;
-    for (let i = 0; i <=  shipsLength; i++) {
+    let increment = 0;
+    for (let i = 0; i <=  shipsLength - 1; i++) {
         if (board[random + increment] === 0) {
-            board[random + increment] = ship.shipLength[i];
+            board[random + increment] = ship;
             increment += -1;
         }
         else if (board[random + increment] !== 0) {
@@ -149,10 +149,10 @@ function checkRight(board, random, shipsLength, ship) {
     if (board[random] !== 0) {
         return false
     }
-    let increment;
-    for (let i = 0; i <=  shipsLength; i++) {
+    let increment = 0;
+    for (let i = 0; i <=  shipsLength - 1; i++) {
         if (board[random + increment] === 0) {
-            board[random + increment] = ship.shipLength[i];
+            board[random + increment] = ship;
             increment += 1;
         }
         else if (board[random + increment] !== 0) {
@@ -182,7 +182,7 @@ let playerOne = playerFactory();
 //console.log(playerOne[4].shipLength[1])
 
 let gametest = gameboardFactory();
-//console.table(gametest)
+console.table(gametest)
 
 
 
