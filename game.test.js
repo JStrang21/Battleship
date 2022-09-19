@@ -6,7 +6,7 @@ test('factory creates ship with appropriate length', () => {
     expect(ship.shipLength.length).toBe(3)
 })
 
-test('hit on ship', () => {
+test('hit on ship at correct spot', () => {
     const ship = shipFactory(3);
     ship.hit(1)
     expect(ship.shipLength).toStrictEqual([0,1,0])
@@ -18,4 +18,18 @@ test('ship sinks when hit completely', () => {
     ship.hit(1);
     ship.hit(2)
     expect(ship.shipLength).toStrictEqual([1,1,1])
+})
+
+test('checks for ship sunk', () => {
+    const ship = shipFactory(3);
+    ship.hit(0);
+    ship.hit(1);
+    ship.hit(2);
+    expect(ship.isSunk()).toBeTruthy();
+})
+
+test('only sunk when all spots are hit', () => {
+    const ship = shipFactory(3);
+    ship.hit(0);
+    expect(ship.isSunk()).toBeFalsy();
 })
