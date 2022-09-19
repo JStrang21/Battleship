@@ -50,7 +50,8 @@ function gameboardFactory() {
         
     const playerOne = playerFactory();
     let random = getRandom(0, board.length - 1)
-    placement(board, playerOne[0], random);
+    placement(board, playerOne[3], random);
+
 
     /*for (let ship in playerOne) {
         let random = getRandom(0, board.length - 1)
@@ -101,7 +102,7 @@ function placement(board, ship, random) {
 }
 
 function checkTop(board, random, shipsLength, ship) {
-    if (board[random] !== 0) {
+    if (board[random] !== 0 || board[random] === undefined) {
         return false
     }
     let increment = 0;
@@ -111,7 +112,7 @@ function checkTop(board, random, shipsLength, ship) {
             increment += -10;
         }
         else if (board[random + increment] !== 0) {
-            return false
+            checkBottom(board, random, shipsLength, ship)
         }
     }
 }

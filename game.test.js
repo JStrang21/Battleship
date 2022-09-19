@@ -57,12 +57,16 @@ test('gameboard creates 10x10 board of zeros', () => {
     expect(gameboardFactory()).toHaveLength(100);
 })
 
-/*test('player factory returns array of ships')
+/*
+test('gameboard places ships in empty squares");
+test('gameboard checks underneath/above sqaures if cant place at top/bottom')
+test('gameboard checks left/right squares if cant place at right/left')
+test('gameboard trys to place ship again if cant place it initially')
+
+test('player factory returns array of ships')
 
 test('gameboard creates 10x10 board')
 
 test('gameboard randomly places player ships')
 
-test('gameboard updates when ship is hit')
-
-test('gameboard ')*/
+test('gameboard updates when ship is hit')*/
