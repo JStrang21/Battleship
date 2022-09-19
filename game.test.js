@@ -6,23 +6,23 @@ test('factory creates ship with appropriate length', () => {
     expect(ship.shipLength.length).toBe(3)
 })
 
-test('factory initializes ship length array to zeros', () => {
+test('factory initializes ship length array to ones', () => {
     const ship = shipFactory(3);
-    expect(ship.shipLength).toStrictEqual([0,0,0])
+    expect(ship.shipLength).toStrictEqual([1,1,1])
 })
 
 test('hit on ship at correct spot', () => {
     const ship = shipFactory(3);
     ship.hit(1)
-    expect(ship.shipLength).toStrictEqual([0,1,0])
+    expect(ship.shipLength).toStrictEqual([1,2,1])
 })
 
-test('ship sinks when hit completely', () => {
+test('ship sinks when hit completely and length equals 3', () => {
     const ship = shipFactory(3);
     ship.hit(0);
     ship.hit(1);
     ship.hit(2)
-    expect(ship.shipLength).toStrictEqual([1,1,1])
+    expect(ship.shipLength).toStrictEqual([3,3,3])
 })
 
 test('checks for ship sunk', () => {
@@ -43,7 +43,7 @@ test('player factory creates five ships', () => {
     expect(playerFactory().length).toBe(5)
 })
 
-test('player factory returns array of ships')
+/*test('player factory returns array of ships')
 
 test('gameboard creates 10x10 board')
 
@@ -51,4 +51,4 @@ test('gameboard randomly places player ships')
 
 test('gameboard updates when ship is hit')
 
-test('gameboard ')
+test('gameboard ')*/

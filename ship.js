@@ -2,13 +2,13 @@ function shipFactory(length) {
     let shipLength = [];
     let i = 0;
     while (i <= length - 1) {
-        shipLength[i] = 0;
+        shipLength[i] = 1;
         i++;
     }
     const hit = (hitLocation) => {
         for (let i = 0; i <= shipLength.length; i++) {
             if (hitLocation === i) {
-                shipLength[i] = 1;
+                shipLength[i] = 2;
                 isSunk();
                 return;
             }
@@ -17,9 +17,14 @@ function shipFactory(length) {
     const isSunk = () => {
         let isShipSunk;
         for (let i in shipLength) {
-            if (shipLength[i] === 0) {
+            if (shipLength[i] === 1) {
                 return isShipSunk = false;
             }
+        }
+        let i = 0;
+        while (i <= length - 1) {
+            shipLength[i] = 3;
+            i++;
         }
         return isShipSunk = true;
     }
@@ -27,6 +32,10 @@ function shipFactory(length) {
 }
 
 function gameboardFactory() {
+    //0 = no ship
+    //1 = ship
+    //2 = hit ship
+    //3 = destroyed ship
     const board = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -38,14 +47,11 @@ function gameboardFactory() {
                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ];
     const playerOne = playerFactory();
-    for (let ship in playerOne) {
-        
-    }
-    
+    playerOne[0].hit(0)
+    board[0] = playerOne[0].shipLength[0];
+    board[1] = playerOne[0].shipLength[1];
+    return board;
 }
-
-let ship = shipFactory(2);
-
 
 function playerFactory() {
     let lengths = [2, 3, 3, 4, 5]
@@ -58,7 +64,11 @@ function playerFactory() {
 }
 
 let playerOne = playerFactory();
-console.log(playerOne[4])
+
+//console.log(playerOne[4].shipLength[1])
+
+let gametest = gameboardFactory();
+//console.table(gametest)
 
 
 /*for (let i = 0; i <= shipTwo.shipLength.length - 1; i++) {
