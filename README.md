@@ -1,1 +1,2 @@
 # Battleship
+In this project I will be attempting to make a battleship game app. I having been learning about test driven development and will be trying to implement those ideas throughout the process. 
