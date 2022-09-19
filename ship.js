@@ -70,11 +70,37 @@ function placement(board, ship, random) {
     }
     let testShipLength = ship.shipLength.length
     for (let i = 0; i <= testShipLength - 1; i++) {
+        let randomDirection = getRandom(0, 4);
+        if (randomDirection === 0) {
+            checkTop(board, ship, testShipLength)
+        }
+        else if (randomDirection === 1) {
+            checkBottom(board, ship, random)
+        }
+        else if (randomDirection === 2) {
+            checkLeft(board, ship, random)
+        }
+        else if (randomDirection === 3) {
+            checkRight(board, ship, random)
+        }
         //Could use another random number to randomly select up/down/left/right
         if (board[random + i] === 0) {
             board[random + i] = ship;
         }
     }
+}
+
+function checkTop(board, random, shipsLength) {
+
+}
+function checkBottom(board, random, shipsLength) {
+
+}
+function checkLeft(board, random, shipsLength) {
+
+}
+function checkRight(board, random, shipsLength) {
+
 }
 
 function getRandom(min, max) {
@@ -98,7 +124,7 @@ let playerOne = playerFactory();
 //console.log(playerOne[4].shipLength[1])
 
 let gametest = gameboardFactory();
-console.table(gametest)
+//console.table(gametest)
 
 
 
