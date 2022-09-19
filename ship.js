@@ -36,7 +36,7 @@ function gameboardFactory() {
     //1 = ship
     //2 = hit ship
     //3 = destroyed ship
-    const board = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    let board = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -47,10 +47,21 @@ function gameboardFactory() {
                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ];
     const playerOne = playerFactory();
-    playerOne[0].hit(0)
+    for (let ship in playerOne) {
+        let random = getRandom(0, board.length - 1)
+        console.log(random)
+    }
+    /*playerOne[0].hit(0)
+    playerOne[0].hit(1)
     board[0] = playerOne[0].shipLength[0];
-    board[1] = playerOne[0].shipLength[1];
+    board[1] = playerOne[0].shipLength[1];*/
     return board;
+}
+
+function getRandom(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min) + min);
 }
 
 function playerFactory() {
@@ -68,7 +79,8 @@ let playerOne = playerFactory();
 //console.log(playerOne[4].shipLength[1])
 
 let gametest = gameboardFactory();
-//console.table(gametest)
+
+
 
 
 /*for (let i = 0; i <= shipTwo.shipLength.length - 1; i++) {

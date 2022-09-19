@@ -43,6 +43,20 @@ test('player factory creates five ships', () => {
     expect(playerFactory().length).toBe(5)
 })
 
+test('gameboard creates 10x10 board of zeros', () => {
+    const board = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ]
+    expect(gameboardFactory()).toHaveLength(100);
+})
+
 /*test('player factory returns array of ships')
 
 test('gameboard creates 10x10 board')
