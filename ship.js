@@ -37,25 +37,36 @@ function gameboardFactory() {
     //2 = hit ship
     //3 = destroyed ship
     let board = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                   0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                   0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                   0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                   0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                   0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                   0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                   0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                   0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ];
+                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ];
+        
     const playerOne = playerFactory();
     for (let ship in playerOne) {
+        placement(board, playerOne[ship])
         let random = getRandom(0, board.length - 1)
-        console.log(random)
+        for (let i = 0; i <= playerOne[ship].shipLength.length - 1; i++) {
+            if (board[random] === 0 /*&& placement(board, playerOne[ship])*/) {
+                //Check if space for vertical or horizontal placement
+                board[random] = playerOne[ship];
+            }
+        }
     }
     /*playerOne[0].hit(0)
     playerOne[0].hit(1)
     board[0] = playerOne[0].shipLength[0];
     board[1] = playerOne[0].shipLength[1];*/
     return board;
+}
+
+function placement(board, ship) {
+    
 }
 
 function getRandom(min, max) {
@@ -79,7 +90,7 @@ let playerOne = playerFactory();
 //console.log(playerOne[4].shipLength[1])
 
 let gametest = gameboardFactory();
-
+//console.log(gametest)
 
 
 
