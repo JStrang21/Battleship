@@ -107,19 +107,58 @@ function checkTop(board, random, shipsLength, ship) {
     let increment;
     for (let i = 0; i <=  shipsLength; i++) {
         if (board[random + increment] === 0) {
-            board[random + increment] = ship.shipsLength[i];
+            board[random + increment] = ship.shipLength[i];
             increment += -10;
+        }
+        else if (board[random + increment] !== 0) {
+            return false
         }
     }
 }
 function checkBottom(board, random, shipsLength, ship) {
-
+    if (board[random] !== 0) {
+        return false
+    }
+    let increment;
+    for (let i = 0; i <=  shipsLength; i++) {
+        if (board[random + increment] === 0) {
+            board[random + increment] = ship.shipLength[i];
+            increment += 10;
+        }
+        else if (board[random + increment] !== 0) {
+            return false
+        }
+    }
 }
 function checkLeft(board, random, shipsLength, ship) {
-
+    if (board[random] !== 0) {
+        return false
+    }
+    let increment;
+    for (let i = 0; i <=  shipsLength; i++) {
+        if (board[random + increment] === 0) {
+            board[random + increment] = ship.shipLength[i];
+            increment += -1;
+        }
+        else if (board[random + increment] !== 0) {
+            return false
+        }
+    }
 }
 function checkRight(board, random, shipsLength, ship) {
-
+    if (board[random] !== 0) {
+        return false
+    }
+    let increment;
+    for (let i = 0; i <=  shipsLength; i++) {
+        if (board[random + increment] === 0) {
+            board[random + increment] = ship.shipLength[i];
+            increment += 1;
+        }
+        else if (board[random + increment] !== 0) {
+            return false
+        }
+    }
 }
 
 function getRandom(min, max) {
