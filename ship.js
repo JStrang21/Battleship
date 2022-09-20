@@ -15,9 +15,6 @@ function shipFactory(length, name) {
             }
         }
     }
-    const hitTwo = (coordinate) => {
-        
-    }
     const isSunk = () => {
         let isShipSunk;
         for (let i in shipLength) {
@@ -347,30 +344,8 @@ function playerFactory() {
 }
 
 let gametest = gameboardFactory();
-/*let coords = 'A2'
-gametest.recieveAttack(coords); //10
-gametest.recieveAttack('A3'); //20
-gametest.recieveAttack('A4'); //30
-gametest.recieveAttack('A6'); //50
-gametest.recieveAttack('J2'); //19
-gametest.recieveAttack('D8'); //73
-gametest.recieveAttack('D9'); //83*/
 
 
-
-//let playerOne = gametest.playerOne;
-console.table(gametest.boardOne);
-console.table(gametest.boardTwo);
-//console.log(gametest.playerTWo)
-
-
-
-
-
-/*for (let i = 0; i <= shipTwo.shipLength.length - 1; i++) {
-    shipTwo.hit(i)
-}
-console.log(shipTwo.isSunk())*/
 
 export {
     shipFactory, playerFactory, gameboardFactory, checkForOpenSpace,
