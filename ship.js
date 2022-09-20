@@ -36,7 +36,7 @@ function gameboardFactory() {
     //1 = ship
     //2 = hit ship
     //3 = destroyed ship
-            //   0                          9
+            //   0  1  2  3  4  5  6  7  8  9
     let board = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
            /*10*/0, 0, 0, 0, 0, 0, 0, 0, 0, 0,/*19*/
                  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -57,6 +57,7 @@ function gameboardFactory() {
             check = checkForOpenSpace(board, playerOne[ship], random);
         }
         let isSpaceOpen = check.space
+        console.log(random, check.direction)
         if (isSpaceOpen) {
             placement(board, playerOne[ship], random, check.direction)
         }
@@ -145,7 +146,6 @@ function insertBottom(board, ship, random) {
     for (let i = 0; i <= testShipLength - 1; i++) {
         board[random + increment] = ship
         increment += 10;
-        i++
     }
     return board
 }
@@ -256,7 +256,7 @@ let playerOne = playerFactory();
 //console.log(playerOne[4].shipLength[1])
 
 let gametest = gameboardFactory();
-//console.table(gametest)
+console.table(gametest)
 
 
 

@@ -52,7 +52,6 @@ const board = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ]
-const playerOne = playerFactory();
 
 test('gameboard creates 10x10 board of zeros', () => {
     expect(gameboardFactory()).toHaveLength(100);
