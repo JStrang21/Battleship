@@ -85,8 +85,18 @@ function gameboardFactory() {
         }
         return board
     }
-    
-    return {board, playerOne, recieveAttack}
+    const checkIfAllSunk = (player) => { 
+        for (let ship in player) {
+            let length = player[ship].shipLength.length;
+            for (let i = 0; i <= length - 1; i++) {
+                if (player[ship].shipLength[i] === 1) {
+                    return false;
+                }
+            }
+        }
+    }
+
+    return {board, playerOne, recieveAttack, missedCoordinates, checkIfAllSunk}
 }
 
 function convertCoordinates(coordinates) {
@@ -311,21 +321,20 @@ function playerFactory() {
     return ships
 }
 
-//console.log(playerOne[4].shipLength[1])
-
 let gametest = gameboardFactory();
-let coords = 'A2'
+/*let coords = 'A2'
 gametest.recieveAttack(coords); //10
 gametest.recieveAttack('A3'); //20
 gametest.recieveAttack('A4'); //30
 gametest.recieveAttack('A6'); //50
 gametest.recieveAttack('J2'); //19
 gametest.recieveAttack('D8'); //73
-gametest.recieveAttack('D9'); //83
+gametest.recieveAttack('D9'); //83*/
 
 
 
-console.table(gametest.board)
+let playerOne = gametest.playerOne;
+gametest.checkIfAllSunk(playerOne)
 
 
 
