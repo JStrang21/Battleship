@@ -42,7 +42,7 @@ function gameboardFactory() {
     //3 = destroyed ship
     //4 = missed A  B  C  D  E  F  G  H  I  J
             //   0  1  2  3  4  5  6  7  8  9
-    let board = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, /*1*/
+   let boardOne=[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, /*1*/
            /*10*/0, 0, 0, 0, 0, 0, 0, 0, 0, 0, /*2*/   /*19*/
                  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, /*3*/
                  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, /*4*/
@@ -52,24 +52,24 @@ function gameboardFactory() {
                  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, /*8*/
                  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, /*9*/
            /*90*/0, 0, 0, 0, 0, 0, 0, 0, 0, 0,]/*10*/ /*99*/
-        
+
+    let boardTwo = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ]
+
     let missedCoordinates = [];
     const playerOne = playerFactory();
-    //Object.defineProperty(playerOne, 'allShipsSunk', {enumerable: false})
+    const playerTwo = playerFactory();
+    placeShips(playerOne, boardOne);
+    placeShips(playerTwo, boardTwo);
 
-    for (let ship in playerOne) {
-        
-        //Maybe put ship name in ship creation object to track easier
-        let random = getRandom(0, board.length)
-        let check = false;
-        while (!check) {
-            check = checkForOpenSpace(board, playerOne[ship], random);
-        }
-        if (check.space) {
-            placement(board, playerOne[ship], random, check.direction)
-        }
-        check = false;
-    }
     const recieveAttack = (coordinates) => {
         let actualCoordinate = convertCoordinates(coordinates);
         let valueOfCoord = board[actualCoordinate];
@@ -103,7 +103,24 @@ function gameboardFactory() {
         return true
     }
 
-    return {board, playerOne, recieveAttack, missedCoordinates, checkIfAllSunk}
+    return {boardOne, boardTwo, playerOne, playerTwo, recieveAttack, missedCoordinates, checkIfAllSunk}
+}
+
+function placeShips(player, board) {
+    for (let ship in player) {
+        
+        //Maybe put ship name in ship creation object to track easier
+        let random = getRandom(0, board.length)
+        let check = false;
+        while (!check) {
+            check = checkForOpenSpace(board, player[ship], random);
+        }
+        if (check.space) {
+            placement(board, player[ship], random, check.direction)
+        }
+        check = false;
+        return board
+    }
 }
 
 function convertCoordinates(coordinates) {
