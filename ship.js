@@ -1,5 +1,6 @@
 function shipFactory(length, name) {
     let shipLength = [];
+    let actualLocation = [];
     let i = 0;
     while (i <= length - 1) {
         shipLength[i] = 1;
@@ -13,6 +14,9 @@ function shipFactory(length, name) {
                 return;
             }
         }
+    }
+    const hitTwo = (coordinate) => {
+        
     }
     const isSunk = () => {
         let isShipSunk;
@@ -28,7 +32,7 @@ function shipFactory(length, name) {
         }
         return isShipSunk = true;
     }
-    return {name, hit, shipLength, isSunk}
+    return {name, hit, shipLength, isSunk, actualLocation}
 }
 
 function gameboardFactory() {
@@ -49,6 +53,7 @@ function gameboardFactory() {
                  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, /*9*/
            /*90*/0, 0, 0, 0, 0, 0, 0, 0, 0, 0,]/*10*/ /*99*/
         
+    let missedCoordinates = [];
     const playerOne = playerFactory();
     for (let ship in playerOne) {
         //Maybe put ship name in ship creation object to track easier
@@ -64,6 +69,20 @@ function gameboardFactory() {
     }
     const recieveAttack = (coordinates) => {
         let actualCoordinate = convertCoordinates(coordinates);
+        let valueOfCoord = board[actualCoordinate];
+        if (valueOfCoord === 0) {
+            board[actualCoordinate] = 4;
+            missedCoordinates.push(actualCoordinate);
+        } 
+        else if (valueOfCoord !== 0) {
+            let hitShip = board[actualCoordinate];
+            for (let i in hitShip.actualLocation) {
+                if (hitShip[i] === actualCoordinate) {
+                    hitShip[i].hit(actualCoordinate)
+                }
+            }
+        }
+        return board
     }
     
     return {board, playerOne, recieveAttack}
@@ -76,7 +95,6 @@ function convertCoordinates(coordinates) {
     let trueCoord = Number(number + "" + letter);
     return trueCoord
 }
-
 
 function convertLetter(letter) {
     switch(letter) {
@@ -172,6 +190,7 @@ function insertTop(board, ship, random) {
     let increment = 0;
     for (let i = 0; i <= testShipLength - 1; i++) {
         board[random + increment] = ship
+        ship.actualLocation.push(random + increment);
         increment -= 10;
     }
     return board
@@ -181,7 +200,8 @@ function insertBottom(board, ship, random) {
     let testShipLength = ship.shipLength.length
     let increment = 0;
     for (let i = 0; i <= testShipLength - 1; i++) {
-        board[random + increment] = ship
+        board[random + increment] = ship;
+        ship.actualLocation.push(random + increment);
         increment += 10;
     }
     return board
@@ -191,7 +211,8 @@ function insertLeft(board, ship, random) {
     let testShipLength = ship.shipLength.length
     let increment = 0;
     for (let i = 0; i <= testShipLength - 1; i++) {
-        board[random + increment] = ship
+        board[random + increment] = ship;
+        ship.actualLocation.push(random + increment);
         increment -= 1;
     }
     return board
@@ -201,7 +222,8 @@ function insertRight(board, ship, random) {
     let testShipLength = ship.shipLength.length
     let increment = 0;
     for (let i = 0; i <= testShipLength - 1; i++) {
-        board[random + increment] = ship
+        board[random + increment] = ship;
+        ship.actualLocation.push(random + increment);
         increment += 1;
     }
     return board
@@ -291,10 +313,17 @@ function playerFactory() {
 //console.log(playerOne[4].shipLength[1])
 
 let gametest = gameboardFactory();
-gametest.playerOne[0].hit(0);
-gametest.playerOne[0].hit(1);
+let coords = 'A2'
+gametest.recieveAttack(coords); //10
+gametest.recieveAttack('A3'); //20
+gametest.recieveAttack('A4'); //30
+gametest.recieveAttack('A5'); //40
+gametest.recieveAttack('J2'); //19
+gametest.recieveAttack('D8'); //73
+/*gametest.playerOne[0].hit(0);
+gametest.playerOne[0].hit(1);*/
 
-//console.table(gametest.board)
+console.table(gametest.board)
 
 
 
