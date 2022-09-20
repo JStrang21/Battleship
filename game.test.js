@@ -1,4 +1,4 @@
-import {shipFactory, playerFactory, gameboardFactory} from './ship.js';
+import {shipFactory, playerFactory, gameboardFactory, checkForOpenSpace, checkBottom, checkTop, checkLeft, checkRight} from './ship.js';
 
 
 test('factory creates ship with appropriate length', () => {
@@ -42,20 +42,33 @@ test('only sunk when all spots are hit', () => {
 test('player factory creates five ships', () => {
     expect(playerFactory().length).toBe(5)
 })
+const board = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ]
+const playerOne = playerFactory();
 
 test('gameboard creates 10x10 board of zeros', () => {
-    const board = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ]
     expect(gameboardFactory()).toHaveLength(100);
 })
+
+
+
+/*test('returns true if space is available top', () => {
+    let random = 10;
+    expect(checkForOpenSpace(board, playerOne[0], random)).toBeTruthy();
+})
+
+test('returns false if not enough space at top', () => {
+    let random = 0;
+    expect(checkForOpenSpace(board, playerOne))
+})*/
 
 /*
 test('gameboard places ships in empty squares");

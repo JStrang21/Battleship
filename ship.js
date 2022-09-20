@@ -49,28 +49,18 @@ function gameboardFactory() {
            /*90*/0, 0, 0, 0, 0, 0, 0, 0, 0, 0,];/*99*/
         
     const playerOne = playerFactory();
-    /*let random = getRandom(0, board.length - 1)
-    placement(board, playerOne[3], random);*/
-
-
     for (let ship in playerOne) {
         //Maybe put ship name in ship creation object to track easier
         let random = getRandom(0, board.length)
-        let check = checkForOpenSpace(board, playerOne[ship], random);
+        let check = false;
         while (!check) {
             check = checkForOpenSpace(board, playerOne[ship], random);
         }
         let isSpaceOpen = check.space
         if (isSpaceOpen) {
-            
-            //placement(board, playerOne[ship], random, check.direction)
+            placement(board, playerOne[ship], random, check.direction)
         }
-        /*for (let i = 0; i <= playerOne[ship].shipLength.length - 1; i++) {
-            if (board[random] === 0 && placement(board, playerOne[ship], random)) {
-                //Check if space for vertical or horizontal placement
-                board[random] = playerOne[ship];
-            }
-        }*/
+        check = false;
     }
     return board;
 }
@@ -123,60 +113,61 @@ function checkForOpenSpace(board, ship, random) {
 }
 
 function placement(board, ship, random, direction) {
-    //Directions: 0=top/1=bottom/2=left/3=right
-    let testShipLength = ship.shipLength.length
-    for (let i = 0; i <= testShipLength - 1; i++) {
-        /*For edge case where random number is on left or right
-        if (random % 10 === 0 || (random - 1) % 10 === 0) {
-            let randomDirection = getRandom(0, 2);
-            if (randomDirection === 0) {
-                insertTop();
-                //checkTop(board, random, testShipLength, ship)
-                if (checkTop(board, random, testShipLength, ship)) {
-                    
-                }
-            }
-            else if (randomDirection === 1) {
-                insertBottom();
-                //checkBottom(board, random, testShipLength, ship)
-                if (checkBottom(board, random, testShipLength, ship)) {
-
-                }
-            }
-        }
-        else {
-            let randomDirection = getRandom(0, 4);
-            //If space available in given direction then check fn returns true and ship is placed there
-            if (randomDirection === 0) {
-                inserTop();
-                //checkTop(board, random, testShipLength, ship)
-                if (checkTop(board, random, testShipLength, ship)) {
-                    
-                }
-            }
-            else if (randomDirection === 1) {
-                insertBottom();
-                //checkBottom(board, random, testShipLength, ship)
-                if (checkBottom(board, random, testShipLength, ship)) {
-
-                }
-            }
-            else if (randomDirection === 2) {
-                insertLeft();
-                //checkLeft(board, random, testShipLength, ship)
-                if (checkLeft(board, random, testShipLength, ship)) {
-                    
-                }
-            }
-            else if (randomDirection === 3) {
-                insertRight();
-                //checkRight(board, random, testShipLength, ship)
-                if (checkRight(board, random, testShipLength, ship)) {
-                    
-                }
-            }
-        }*/
+    /*Directions: 0=top/1=bottom/2=left/3=right*/
+    let goodDirection = direction;
+    if (goodDirection === 0) {
+        return insertTop(board, ship, random);
     }
+    else if (goodDirection === 1) {
+        return insertBottom(board, ship, random)
+    }
+    else if (goodDirection === 2) {
+        return insertLeft(board, ship, random)
+    }
+    else if (goodDirection === 3) {
+        return insertRight(board, ship, random)
+    }
+}
+
+function insertTop(board, ship, random) {
+    let testShipLength = ship.shipLength.length
+    let increment = 0;
+    for (let i = 0; i <= testShipLength - 1; i++) {
+        board[random + increment] = ship
+        increment -= 10;
+    }
+    return board
+}
+
+function insertBottom(board, ship, random) {
+    let testShipLength = ship.shipLength.length
+    let increment = 0;
+    for (let i = 0; i <= testShipLength - 1; i++) {
+        board[random + increment] = ship
+        increment += 10;
+        i++
+    }
+    return board
+}
+
+function insertLeft(board, ship, random) {
+    let testShipLength = ship.shipLength.length
+    let increment = 0;
+    for (let i = 0; i <= testShipLength - 1; i++) {
+        board[random + increment] = ship
+        increment -= 1;
+    }
+    return board
+}
+
+function insertRight(board, ship, random) {
+    let testShipLength = ship.shipLength.length
+    let increment = 0;
+    for (let i = 0; i <= testShipLength - 1; i++) {
+        board[random + increment] = ship
+        increment += 1;
+    }
+    return board
 }
 
 function checkTop(board, random, shipsLength) {
@@ -226,6 +217,7 @@ function checkLeft(board, random, shipsLength) {
     let space = true;
     return {direction, space}
 }
+
 function checkRight(board, random, shipsLength) {
     if (board[random] !== 0) {
         return false
@@ -275,7 +267,10 @@ let gametest = gameboardFactory();
 }
 console.log(shipTwo.isSunk())*/
 
-export {shipFactory, playerFactory, gameboardFactory}
+export {
+    shipFactory, playerFactory, gameboardFactory, checkForOpenSpace,
+    checkTop, checkBottom, checkLeft, checkRight
+}
 
 
 
