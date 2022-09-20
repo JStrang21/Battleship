@@ -36,17 +36,18 @@ function gameboardFactory() {
     //1 = ship
     //2 = hit ship
     //3 = destroyed ship
+    //4 = missed A  B  C  D  E  F  G  H  I  J
             //   0  1  2  3  4  5  6  7  8  9
-    let board = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-           /*10*/0, 0, 0, 0, 0, 0, 0, 0, 0, 0,/*19*/
-                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-           /*90*/0, 0, 0, 0, 0, 0, 0, 0, 0, 0,];/*99*/
+    let board = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, /*1*/
+           /*10*/0, 0, 0, 0, 0, 0, 0, 0, 0, 0, /*2*/   /*19*/
+                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, /*3*/
+                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, /*4*/
+                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, /*5*/
+                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, /*6*/
+                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, /*7*/
+                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, /*8*/
+                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, /*9*/
+           /*90*/0, 0, 0, 0, 0, 0, 0, 0, 0, 0,]/*10*/ /*99*/
         
     const playerOne = playerFactory();
     for (let ship in playerOne) {
@@ -61,7 +62,45 @@ function gameboardFactory() {
         }
         check = false;
     }
-    return {board, playerOne}
+    const recieveAttack = (coordinates) => {
+        let actualCoordinate = convertCoordinates(coordinates);
+    }
+    
+    return {board, playerOne, recieveAttack}
+}
+
+function convertCoordinates(coordinates) {
+    let splitCoords = coordinates.split("")
+    let letter = convertLetter(splitCoords[0]);
+    let number = splitCoords[1] - 1;
+    let trueCoord = Number(number + "" + letter);
+    return trueCoord
+}
+
+
+function convertLetter(letter) {
+    switch(letter) {
+        case 'A':
+            return 0
+        case 'B':
+            return 1
+        case 'C':
+            return 2
+        case 'D':
+            return 3
+        case 'E':
+            return 4
+        case 'F':
+            return 5
+        case 'G':
+            return 6
+        case 'H':
+            return 7
+        case 'I':
+            return 8
+        case 'J':
+            return 9
+    }
 }
 
 function checkForOpenSpace(board, ship, random) {
@@ -255,7 +294,7 @@ let gametest = gameboardFactory();
 gametest.playerOne[0].hit(0);
 gametest.playerOne[0].hit(1);
 
-console.table(gametest.board)
+//console.table(gametest.board)
 
 
 
