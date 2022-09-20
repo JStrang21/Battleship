@@ -76,9 +76,10 @@ function gameboardFactory() {
         } 
         else if (valueOfCoord !== 0) {
             let hitShip = board[actualCoordinate];
-            for (let i in hitShip.actualLocation) {
-                if (hitShip[i] === actualCoordinate) {
-                    hitShip[i].hit(actualCoordinate)
+            let length = hitShip.shipLength.length
+            for (let i = 0; i <= length; i++) {
+                if (hitShip.actualLocation[i] === actualCoordinate) {
+                    hitShip.hit(i)
                 }
             }
         }
@@ -317,11 +318,12 @@ let coords = 'A2'
 gametest.recieveAttack(coords); //10
 gametest.recieveAttack('A3'); //20
 gametest.recieveAttack('A4'); //30
-gametest.recieveAttack('A5'); //40
+gametest.recieveAttack('A6'); //50
 gametest.recieveAttack('J2'); //19
 gametest.recieveAttack('D8'); //73
-/*gametest.playerOne[0].hit(0);
-gametest.playerOne[0].hit(1);*/
+gametest.recieveAttack('D9'); //83
+
+
 
 console.table(gametest.board)
 
