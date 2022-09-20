@@ -55,7 +55,10 @@ function gameboardFactory() {
         
     let missedCoordinates = [];
     const playerOne = playerFactory();
+    //Object.defineProperty(playerOne, 'allShipsSunk', {enumerable: false})
+
     for (let ship in playerOne) {
+        
         //Maybe put ship name in ship creation object to track easier
         let random = getRandom(0, board.length)
         let check = false;
@@ -89,11 +92,15 @@ function gameboardFactory() {
         for (let ship in player) {
             let length = player[ship].shipLength.length;
             for (let i = 0; i <= length - 1; i++) {
-                if (player[ship].shipLength[i] === 1) {
+                if (player[ship].shipLength[i] === 1 || player[ship].shipLength[i] === 2) {
                     return false;
+                }
+                else {
+                    continue
                 }
             }
         }
+        return true
     }
 
     return {board, playerOne, recieveAttack, missedCoordinates, checkIfAllSunk}
@@ -334,7 +341,7 @@ gametest.recieveAttack('D9'); //83*/
 
 
 let playerOne = gametest.playerOne;
-gametest.checkIfAllSunk(playerOne)
+console.log(gametest.checkIfAllSunk(playerOne))
 
 
 
