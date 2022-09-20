@@ -64,7 +64,8 @@ function gameboardFactory() {
                     0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ]
 
-    let missedCoordinates = [];
+    let missedCoordinatesOne = [];
+    let missedCoordinatesTwo = [];
     const playerOne = playerFactory();
     const playerTwo = playerFactory();
     placeShips(playerOne, boardOne);
@@ -103,7 +104,7 @@ function gameboardFactory() {
         return true
     }
 
-    return {boardOne, boardTwo, playerOne, playerTwo, recieveAttack, missedCoordinates, checkIfAllSunk}
+    return {boardOne, boardTwo, playerOne, playerTwo, recieveAttack, missedCoordinatesOne, missedCoordinatesTwo, checkIfAllSunk}
 }
 
 function placeShips(player, board) {
@@ -119,8 +120,8 @@ function placeShips(player, board) {
             placement(board, player[ship], random, check.direction)
         }
         check = false;
-        return board
     }
+    return board
 }
 
 function convertCoordinates(coordinates) {
@@ -357,8 +358,10 @@ gametest.recieveAttack('D9'); //83*/
 
 
 
-let playerOne = gametest.playerOne;
-console.log(gametest.checkIfAllSunk(playerOne))
+//let playerOne = gametest.playerOne;
+console.table(gametest.boardOne);
+console.table(gametest.boardTwo);
+//console.log(gametest.playerTWo)
 
 
 
