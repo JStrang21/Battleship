@@ -56,14 +56,12 @@ function gameboardFactory() {
         while (!check) {
             check = checkForOpenSpace(board, playerOne[ship], random);
         }
-        let isSpaceOpen = check.space
-        console.log(random, check.direction)
-        if (isSpaceOpen) {
+        if (check.space) {
             placement(board, playerOne[ship], random, check.direction)
         }
         check = false;
     }
-    return board;
+    return {board, playerOne}
 }
 
 function checkForOpenSpace(board, ship, random) {
@@ -251,12 +249,13 @@ function playerFactory() {
     return ships
 }
 
-let playerOne = playerFactory();
-
 //console.log(playerOne[4].shipLength[1])
 
 let gametest = gameboardFactory();
-console.table(gametest)
+gametest.playerOne[0].hit(0);
+gametest.playerOne[0].hit(1);
+
+console.table(gametest.board)
 
 
 
