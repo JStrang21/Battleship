@@ -65,6 +65,7 @@ function gameboardFactory() {
     let missedCoordinatesTwo = [];
     const playerOne = playerFactory();
     const playerTwo = playerFactory();
+    //issue with placeships fn
     placeShips(playerOne, boardOne);
     placeShips(playerTwo, boardTwo);
 
@@ -106,12 +107,12 @@ function gameboardFactory() {
 
 function placeShips(player, board) {
     for (let ship in player) {
-        
         //Maybe put ship name in ship creation object to track easier
         let random = getRandom(0, board.length)
         let check = false;
         while (!check) {
             check = checkForOpenSpace(board, player[ship], random);
+            random = getRandom(0, board.length)
         }
         if (check.space) {
             placement(board, player[ship], random, check.direction)
@@ -342,9 +343,6 @@ function playerFactory() {
     }
     return ships
 }
-
-let gametest = gameboardFactory();
-
 
 
 export {
