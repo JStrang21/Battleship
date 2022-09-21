@@ -1,9 +1,11 @@
-import { gameboardFactory, player } from "./ship.js";
+import { gameboardFactory} from "./ship.js";
 
-
+let game = gameboardFactory();
+console.log(game)
 
 window.addEventListener("load", () => {
     try {
+        console.log('Hello')
         gameboardFactory();
     }
     catch (error) {
