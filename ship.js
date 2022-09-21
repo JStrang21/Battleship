@@ -111,8 +111,8 @@ function placeShips(player, board) {
         let random = getRandom(0, board.length)
         let check = false;
         while (!check) {
-            check = checkForOpenSpace(board, player[ship], random);
             random = getRandom(0, board.length)
+            check = checkForOpenSpace(board, player[ship], random);
         }
         if (check.space) {
             placement(board, player[ship], random, check.direction)
