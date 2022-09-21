@@ -344,6 +344,8 @@ function playerFactory() {
     return ships
 }
 
+let game = gameboardFactory();
+console.log(game.playerOne)
 
 export {
     shipFactory, playerFactory, gameboardFactory, checkForOpenSpace,

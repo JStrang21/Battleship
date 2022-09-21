@@ -12,10 +12,17 @@ element.addEventListener('click', () => {
 function matchSquaresToShips(player) {
     for (let i = 0; i <= 99; i++) {
         if (i <= 9) {
-            i = 0 + "" + i;
+            i = Number(0 + "" + i);
         }
         const currentElement = document.querySelector(`[value="${i}"`);
-        console.log(currentElement)
+        for (let ship in player) {
+            let length = player[ship].shipLength.length;
+            for (let j = 0; j <= length - 1; j++) {
+                if (i === player[ship].actualLocation[j]) {
+                    console.log(true)
+                }
+            }
+        }
     }
 }
 
