@@ -4,16 +4,10 @@ let game = gameboardFactory();
 let playerOne = game.playerOne;
 let playerTwo = game.playerTwo;
 
-window.hitOrMiss = hitOrMiss;
-
-function hitOrMiss(event) {
-    console.log(event.path[0])
-}
-
 function matchSquaresToShips(player) {
     let shipSquares = [];
     for (let i = 0; i <= 99; i++) {
-        const currentElement = document.querySelector(`[value="${i}"`);
+        const currentElement = document.querySelector(`[data-value="${i}"`);
         for (let ship in player) {
             let length = player[ship].shipLength.length;
             for (let j = 0; j <= length - 1; j++) {
@@ -29,9 +23,11 @@ function matchSquaresToShips(player) {
 let squares = matchSquaresToShips(playerOne)
 
 for (let i = 0; i <= squares.length - 1; i++) {
-    console.log(squares[i])
-    squares[i].addEventListener('click', () => {
-        
+    console.log(squares[i].dataset.value)
+    squares[i].addEventListener('click', (e) => {
+        //let coordinates = e.dataset.value
+        console.log(this)
+        //playerOne.receiveAttack()
     })
 }
 

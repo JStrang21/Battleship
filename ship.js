@@ -69,7 +69,7 @@ function gameboardFactory() {
     placeShips(playerOne, boardOne);
     placeShips(playerTwo, boardTwo);
 
-    const recieveAttack = (coordinates) => {
+    const receiveAttack = (coordinates) => {
         let actualCoordinate = convertCoordinates(coordinates);
         let valueOfCoord = board[actualCoordinate];
         if (valueOfCoord === 0) {
@@ -102,7 +102,7 @@ function gameboardFactory() {
         return true
     }
 
-    return {boardOne, boardTwo, playerOne, playerTwo, recieveAttack, missedCoordinatesOne, missedCoordinatesTwo, checkIfAllSunk}
+    return {boardOne, boardTwo, playerOne, playerTwo, receiveAttack, missedCoordinatesOne, missedCoordinatesTwo, checkIfAllSunk}
 }
 
 function placeShips(player, board) {
