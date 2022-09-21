@@ -1,26 +1,29 @@
 import { gameboardFactory} from "./ship.js";
 
 let game = gameboardFactory();
-console.log(game)
+let playerOne = game.playerOne;
+let playerTwo = game.playerTwo;
+
+const element = document.querySelector('[value="00"');
+element.addEventListener('click', () => {
+    
+})
+
+function matchSquaresToShips(player) {
+    for (let i = 0; i <= 99; i++) {
+        if (i <= 9) {
+            i = 0 + "" + i;
+        }
+        const currentElement = document.querySelector(`[value="${i}"`);
+        console.log(currentElement)
+    }
+}
 
 window.addEventListener("load", () => {
-    try {
-        console.log('Hello')
-        gameboardFactory();
-    }
-    catch (error) {
-        console.log(error)
-    }
+    matchSquaresToShips(playerOne)
 }) 
 
 
 
-function matchSquaresToShips(player) {
-    
-}
 
-/*const header = document.getElementBy
-const element = document.querySelectorAll("[value='00'");
-element.addEventListener('click', () => {
-    console.log(element)
-})*/
+
