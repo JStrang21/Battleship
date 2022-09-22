@@ -4,7 +4,9 @@ let game = gameboardFactory();
 let playerOne = game.playerOne;
 let playerTwo = game.playerTwo;
 //console.log(game)
-//console.log(playerOne)
+console.log(playerOne)
+console.log(playerTwo)
+
 
 function matchSquaresToShips(player) {
     let shipSquares = [];
@@ -39,7 +41,7 @@ function matchSquaresToShips2(player) {
 
 let squaresPlayerOne = matchSquaresToShips(playerOne)
 let squaresPlayerTwo = matchSquaresToShips2(playerTwo);
-console.log(squaresPlayerTwo)
+
 for (let i = 0; i <= squaresPlayerOne.length - 1; i++) {
     squaresPlayerOne[i].style.backgroundColor = "green";
     let coordinates = squaresPlayerOne[i].dataset.value;
@@ -57,10 +59,10 @@ for (let i = 0; i <= squaresPlayerOne.length - 1; i++) {
 
 for (let i = 0; i <= squaresPlayerTwo.length - 1; i++) {
     squaresPlayerTwo[i].style.backgroundColor = "green";
-    let coordinates = squaresPlayerTwo[i].dataset.value;
+    let coordinates = squaresPlayerTwo[i].dataset.valuetwo;
     let board = game.boardTwo
     let playerTwo = game.playerTwo
-    //squaresPlayerTwo[i].innerHTML = board[coordinates].name
+    squaresPlayerTwo[i].innerHTML = board[coordinates].name
     squaresPlayerTwo[i].addEventListener('click', (e) => { 
         game.receiveAttack(coordinates, board)
         let isGameOver = game.checkIfAllSunk(playerTwo);
