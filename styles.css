@@ -44,20 +44,6 @@ body {
 .p2square {
     border: 1px solid blue;
 }
-.p2square:active {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: row;
-    text-align: center;
-    font-size: large;
-    font-weight: bold;
-}
-.p1square:active {
-    text-align: center;
-    font-size: large;
-    font-weight: bold;
-}
 
 .hitSquare {
     background-color: red !important;
@@ -81,3 +67,4 @@ body {
     font-size: x-large;
     font-weight: bold;
 }
+
