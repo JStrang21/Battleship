@@ -3,6 +3,8 @@ import { gameboardFactory} from "./ship.js";
 let game = gameboardFactory();
 let playerOne = game.playerOne;
 let playerTwo = game.playerTwo;
+console.log(game)
+console.log(playerOne)
 
 function matchSquaresToShips(player) {
     let shipSquares = [];
@@ -23,11 +25,12 @@ function matchSquaresToShips(player) {
 let squares = matchSquaresToShips(playerOne)
 
 for (let i = 0; i <= squares.length - 1; i++) {
-    console.log(squares[i].dataset.value)
+    squares[i].style.backgroundColor = "green"
     squares[i].addEventListener('click', (e) => {
-        //let coordinates = e.dataset.value
-        console.log(this)
-        //playerOne.receiveAttack()
+        let coordinates = squares[i].dataset.value;
+        let board = game.boardOne
+        game.receiveAttack(coordinates, board)
+        
     })
 }
 

@@ -69,8 +69,9 @@ function gameboardFactory() {
     placeShips(playerOne, boardOne);
     placeShips(playerTwo, boardTwo);
 
-    const receiveAttack = (coordinates) => {
-        let actualCoordinate = convertCoordinates(coordinates);
+    const receiveAttack = (coordinates, board) => {
+        //let actualCoordinate = convertCoordinates(coordinates);
+        let actualCoordinate = Number(coordinates);
         let valueOfCoord = board[actualCoordinate];
         if (valueOfCoord === 0) {
             board[actualCoordinate] = 4;
@@ -78,6 +79,7 @@ function gameboardFactory() {
         } 
         else if (valueOfCoord !== 0) {
             let hitShip = board[actualCoordinate];
+            console.log(hitShip)
             let length = hitShip.shipLength.length
             for (let i = 0; i <= length; i++) {
                 if (hitShip.actualLocation[i] === actualCoordinate) {
@@ -104,6 +106,9 @@ function gameboardFactory() {
 
     return {boardOne, boardTwo, playerOne, playerTwo, receiveAttack, missedCoordinatesOne, missedCoordinatesTwo, checkIfAllSunk}
 }
+let game = gameboardFactory();
+let playerOne = game.playerOne;
+//console.log(game.receiveAttack(10, game.boardOne))
 
 function placeShips(player, board) {
     for (let ship in player) {
@@ -343,9 +348,6 @@ function playerFactory() {
     }
     return ships
 }
-
-let game = gameboardFactory();
-console.log(game.playerOne)
 
 export {
     shipFactory, playerFactory, gameboardFactory, checkForOpenSpace,
