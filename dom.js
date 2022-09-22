@@ -4,8 +4,8 @@ let game = gameboardFactory();
 let playerOne = game.playerOne;
 let playerTwo = game.playerTwo;
 //console.log(game)
-console.log(playerOne)
-console.log(playerTwo)
+//console.log(playerOne)
+//console.log(playerTwo)
 
 
 function matchSquaresToShips(player) {
@@ -50,6 +50,7 @@ for (let i = 0; i <= squaresPlayerOne.length - 1; i++) {
     squaresPlayerOne[i].innerHTML = board[coordinates].name
     squaresPlayerOne[i].addEventListener('click', (e) => {
         game.receiveAttack(coordinates, board)
+        squaresPlayerOne[i].setAttribute('class', 'hitSquare')
         let isGameOver = game.checkIfAllSunk(playerOne);
         if (isGameOver) {
             console.log('PlayerTwo Won the Game')
@@ -64,6 +65,7 @@ for (let i = 0; i <= squaresPlayerTwo.length - 1; i++) {
     let playerTwo = game.playerTwo
     squaresPlayerTwo[i].innerHTML = board[coordinates].name
     squaresPlayerTwo[i].addEventListener('click', (e) => { 
+        squaresPlayerTwo[i].setAttribute('class', 'hitSquare')
         game.receiveAttack(coordinates, board)
         let isGameOver = game.checkIfAllSunk(playerTwo);
         if (isGameOver) {
