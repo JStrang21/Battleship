@@ -49,3 +49,7 @@ body {
     background-color: red !important;
     border: 1px solid blue;
 }
+
+.missed {
+    background-color: white;
+}
