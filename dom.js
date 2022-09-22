@@ -3,7 +3,7 @@ import { gameboardFactory} from "./ship.js";
 let game = gameboardFactory();
 let playerOne = game.playerOne;
 let playerTwo = game.playerTwo;
-console.log(game)
+//console.log(game)
 //console.log(playerOne)
 //console.log(playerTwo)
 
@@ -34,7 +34,7 @@ function matchSquaresToShips2(player) {
             for (let j = 0; j <= length - 1; j++) {
                 if (i === player[ship].actualLocation[j]) {
                     currentElement.classList.add('selectedSquare');
-                    currentElement.classList.remove('notSelected')
+                    currentElement.classList.remove('notSelectedTwo')
                     shipSquares.push(currentElement)
                 }
             }
@@ -51,29 +51,33 @@ for (let i = 0; i <= squaresPlayerOne.length - 1; i++) {
     let coordinates = squaresPlayerOne[i].dataset.value;
     let board = game.boardOne
     let playerOne = game.playerOne
-    squaresPlayerOne[i].innerHTML = board[coordinates].name
+    //squaresPlayerOne[i].innerHTML = board[coordinates].name
     squaresPlayerOne[i].addEventListener('click', (e) => {
+        squaresPlayerOne[i].innerHTML = 'X'
         game.receiveAttack(coordinates, board)
         squaresPlayerOne[i].classList.add('hitSquare')
         let isGameOver = game.checkIfAllSunk(playerOne);
         if (isGameOver) {
             console.log('PlayerTwo Won the Game')
+            resetGame();
         }
     })
 }
 
 for (let i = 0; i <= squaresPlayerTwo.length - 1; i++) {
-    squaresPlayerTwo[i].style.backgroundColor = "green";
+    //squaresPlayerTwo[i].style.backgroundColor = "green";
     let coordinates = squaresPlayerTwo[i].dataset.valuetwo;
     let board = game.boardTwo
     let playerTwo = game.playerTwo
-    squaresPlayerTwo[i].innerHTML = board[coordinates].name
+    //squaresPlayerTwo[i].innerHTML = board[coordinates].name
     squaresPlayerTwo[i].addEventListener('click', (e) => { 
+        squaresPlayerTwo[i].innerHTML = 'X'
         squaresPlayerTwo[i].classList.add('hitSquare')
         game.receiveAttack(coordinates, board)
         let isGameOver = game.checkIfAllSunk(playerTwo);
         if (isGameOver) {
             console.log('PlayerOne Won the Game')
+            resetGame();
         }
     })
 }
@@ -85,6 +89,7 @@ for (let i = 0; i <= unselectedOne.length - 1; i++) {
         let cords = unselectedOne[i].dataset.value;
         game.missedCoordinatesOne.push(cords)
         unselectedOne[i].classList.add('missed')
+        unselectedOne[i].innerHTML = 'X'
     })
 }
 
@@ -93,10 +98,15 @@ for (let i = 0; i <= unselectedTwo.length - 1; i++) {
     unselectedTwo[i].addEventListener('click', () => {
         let cords = unselectedTwo[i].dataset.valuetwo;
         game.missedCoordinatesTwo.push(cords)
-        unselectedTwo[i].classList.add('missed')
+        unselectedTwo[i].classList.add('missed');
+        unselectedTwo[i].innerHTML = 'X'
     })
 }
 
+/*ToDo*/
+function resetGame() {
+
+}
 
 
 

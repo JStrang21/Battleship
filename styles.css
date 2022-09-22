@@ -44,12 +44,40 @@ body {
 .p2square {
     border: 1px solid blue;
 }
+.p2square:active {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    text-align: center;
+    font-size: large;
+    font-weight: bold;
+}
+.p1square:active {
+    text-align: center;
+    font-size: large;
+    font-weight: bold;
+}
 
 .hitSquare {
     background-color: red !important;
-    border: 1px solid blue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    text-align: center;
+    font-size: x-large;
+    font-weight: bold;
+
 }
 
 .missed {
     background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    text-align: center;
+    font-size: x-large;
+    font-weight: bold;
 }
