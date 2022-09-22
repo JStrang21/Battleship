@@ -113,6 +113,7 @@ for (let i = 0; i <= unselectedTwo.length - 1; i++) {
         game.missedCoordinatesTwo.push(cords)
         unselectedTwo[i].classList.add('missed');
         unselectedTwo[i].innerHTML = 'X';
+        //unselectedTwo[i].classList.remove('notSelectedTwo')
         playerTwoClick();
     })
 }
