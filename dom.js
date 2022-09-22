@@ -3,7 +3,7 @@ import { gameboardFactory} from "./ship.js";
 let game = gameboardFactory();
 let playerOne = game.playerOne;
 let playerTwo = game.playerTwo;
-//console.log(game)
+console.log(game)
 //console.log(playerOne)
 //console.log(playerTwo)
 
@@ -82,13 +82,17 @@ for (let i = 0; i <= squaresPlayerTwo.length - 1; i++) {
 let unselectedOne = document.getElementsByClassName('notSelected');
 for (let i = 0; i <= unselectedOne.length - 1; i++) {
     unselectedOne[i].addEventListener('click', () => {
+        let cords = unselectedOne[i].dataset.value;
+        game.missedCoordinatesOne.push(cords)
         unselectedOne[i].classList.add('missed')
     })
 }
 
-let unselectedTwo = document.getElementsByClassName('notSelected');
+let unselectedTwo = document.getElementsByClassName('notSelectedTwo');
 for (let i = 0; i <= unselectedTwo.length - 1; i++) {
     unselectedTwo[i].addEventListener('click', () => {
+        let cords = unselectedTwo[i].dataset.valuetwo;
+        game.missedCoordinatesTwo.push(cords)
         unselectedTwo[i].classList.add('missed')
     })
 }
