@@ -3,8 +3,8 @@ import { gameboardFactory} from "./ship.js";
 let game = gameboardFactory();
 let playerOne = game.playerOne;
 let playerTwo = game.playerTwo;
-console.log(game)
-console.log(playerOne)
+//console.log(game)
+//console.log(playerOne)
 
 function matchSquaresToShips(player) {
     let shipSquares = [];
@@ -21,21 +21,51 @@ function matchSquaresToShips(player) {
     }
     return shipSquares
 }
+function matchSquaresToShips2(player) {
+    let shipSquares = [];
+    for (let i = 0; i <= 99; i++) {
+        const currentElement = document.querySelector(`[data-valueTwo="${i}"`);
+        for (let ship in player) {
+            let length = player[ship].shipLength.length;
+            for (let j = 0; j <= length - 1; j++) {
+                if (i === player[ship].actualLocation[j]) {
+                    shipSquares.push(currentElement)
+                }
+            }
+        }
+    }
+    return shipSquares
+}
 
-let squares = matchSquaresToShips(playerOne)
-
-for (let i = 0; i <= squares.length - 1; i++) {
-    squares[i].style.backgroundColor = "green";
-    let coordinates = squares[i].dataset.value;
+let squaresPlayerOne = matchSquaresToShips(playerOne)
+let squaresPlayerTwo = matchSquaresToShips2(playerTwo);
+console.log(squaresPlayerTwo)
+for (let i = 0; i <= squaresPlayerOne.length - 1; i++) {
+    squaresPlayerOne[i].style.backgroundColor = "green";
+    let coordinates = squaresPlayerOne[i].dataset.value;
     let board = game.boardOne
     let playerOne = game.playerOne
-    squares[i].innerHTML = board[coordinates].name
-    squares[i].addEventListener('click', (e) => {
-        
+    squaresPlayerOne[i].innerHTML = board[coordinates].name
+    squaresPlayerOne[i].addEventListener('click', (e) => {
         game.receiveAttack(coordinates, board)
         let isGameOver = game.checkIfAllSunk(playerOne);
         if (isGameOver) {
-            console.log('Player Won the Game')
+            console.log('PlayerTwo Won the Game')
+        }
+    })
+}
+
+for (let i = 0; i <= squaresPlayerTwo.length - 1; i++) {
+    squaresPlayerTwo[i].style.backgroundColor = "green";
+    let coordinates = squaresPlayerTwo[i].dataset.value;
+    let board = game.boardTwo
+    let playerTwo = game.playerTwo
+    //squaresPlayerTwo[i].innerHTML = board[coordinates].name
+    squaresPlayerTwo[i].addEventListener('click', (e) => { 
+        game.receiveAttack(coordinates, board)
+        let isGameOver = game.checkIfAllSunk(playerTwo);
+        if (isGameOver) {
+            console.log('PlayerOne Won the Game')
         }
     })
 }

@@ -322,8 +322,6 @@ function checkRight(board, random, shipsLength) {
     }
     let increment = 0;
     for (let i = 0; i <=  shipsLength - 1; i++) {
-       
-        console.log(random, lastSquare, shipsLength)
         if (board[random + increment] !== 0) {
             return false;    
         }

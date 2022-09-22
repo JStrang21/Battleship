@@ -34,10 +34,14 @@ body {
 
 
 .playerTwoBoard {
+    background-color: lightblue;
     grid-column: 1 / -1;
     grid-row: 3 / -1;
 
     display: grid;
-    grid-template-columns: repeat(10, 1fr);
-    grid-template-rows: repeat(10, 1fr);
+    grid-template-columns: repeat(11, 1fr);
+    grid-template-rows: repeat(11, 1fr);
+}
+.p2square {
+    border: 1px solid blue;
 }
