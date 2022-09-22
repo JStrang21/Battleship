@@ -7,6 +7,7 @@ function shipFactory(length, name) {
         i++;
     }
     const hit = (hitLocation) => {
+        //maybe ship.length - 1 //
         for (let i = 0; i <= shipLength.length; i++) {
             if (hitLocation === i) {
                 shipLength[i] = 2;
@@ -19,7 +20,7 @@ function shipFactory(length, name) {
         let isShipSunk;
         for (let i in shipLength) {
             if (shipLength[i] === 1) {
-                return isShipSunk = false;
+                return false;
             }
         }
         let i = 0;
@@ -27,7 +28,7 @@ function shipFactory(length, name) {
             shipLength[i] = 3;
             i++;
         }
-        return isShipSunk = true;
+        return true;
     }
     return {name, hit, shipLength, isSunk, actualLocation}
 }
@@ -79,7 +80,6 @@ function gameboardFactory() {
         } 
         else if (valueOfCoord !== 0) {
             let hitShip = board[actualCoordinate];
-            console.log(hitShip)
             let length = hitShip.shipLength.length
             for (let i = 0; i <= length; i++) {
                 if (hitShip.actualLocation[i] === actualCoordinate) {
@@ -127,7 +127,7 @@ function placeShips(player, board) {
     return board
 }
 
-function convertCoordinates(coordinates) {
+/*function convertCoordinates(coordinates) {
     let splitCoords = coordinates.split("")
     let letter = convertLetter(splitCoords[0]);
     let number = splitCoords[1] - 1;
@@ -158,7 +158,7 @@ function convertLetter(letter) {
         case 'J':
             return 9
     }
-}
+}*/
 
 function checkForOpenSpace(board, ship, random) {
     let shipsLength = ship.shipLength.length;
@@ -322,6 +322,8 @@ function checkRight(board, random, shipsLength) {
     }
     let increment = 0;
     for (let i = 0; i <=  shipsLength - 1; i++) {
+       
+        console.log(random, lastSquare, shipsLength)
         if (board[random + increment] !== 0) {
             return false;    
         }

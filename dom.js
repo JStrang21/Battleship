@@ -25,12 +25,18 @@ function matchSquaresToShips(player) {
 let squares = matchSquaresToShips(playerOne)
 
 for (let i = 0; i <= squares.length - 1; i++) {
-    squares[i].style.backgroundColor = "green"
+    squares[i].style.backgroundColor = "green";
+    let coordinates = squares[i].dataset.value;
+    let board = game.boardOne
+    let playerOne = game.playerOne
+    squares[i].innerHTML = board[coordinates].name
     squares[i].addEventListener('click', (e) => {
-        let coordinates = squares[i].dataset.value;
-        let board = game.boardOne
-        game.receiveAttack(coordinates, board)
         
+        game.receiveAttack(coordinates, board)
+        let isGameOver = game.checkIfAllSunk(playerOne);
+        if (isGameOver) {
+            console.log('Player Won the Game')
+        }
     })
 }
 
