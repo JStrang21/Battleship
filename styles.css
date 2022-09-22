@@ -20,9 +20,14 @@ body {
 }
 
 .playerOneBoard {
-    background-color: lightblue;
+    justify-self: center;
+    background-color: lightgrey;
     grid-column: 1 / -1;
     grid-row: 2 / 3;
+    padding-right: 4%;
+    padding-bottom: 7%;
+    width: 90%;
+    height: 50%;
 
     display: grid;
     grid-template-columns: repeat(11, 1fr);
@@ -30,12 +35,18 @@ body {
 }
 .p1square {
     border: 1px solid blue;
+    background-color: lightblue;
 }
 
 .playerTwoBoard {
-    background-color: lightblue;
+    justify-self: center;
+    background-color: lightgrey;
     grid-column: 1 / -1;
     grid-row: 3 / -1;
+    padding-right: 4%;
+    padding-bottom: 7%;
+    width: 80%;
+    height: 70%;
 
     display: grid;
     grid-template-columns: repeat(11, 1fr);
@@ -43,6 +54,7 @@ body {
 }
 .p2square {
     border: 1px solid blue;
+    background-color: lightblue;
 }
 
 .hitSquare {
@@ -68,3 +80,11 @@ body {
     font-weight: bold;
 }
 
+.side {
+    background-color: lightgrey;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: large;
+    font-weight: bold;
+}
