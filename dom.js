@@ -1,11 +1,22 @@
 import { gameboardFactory, getRandom } from "./ship.js";
 
+
 let game = gameboardFactory();
 let playerOne = game.playerOne;
 let playerTwo = game.playerTwo;
 //console.log(game)
 //console.log(playerOne)
 //console.log(playerTwo)
+
+/*ToDo*/
+function resetGame() {
+    
+}
+
+setTimeout(() => {
+    //console.log('hello')
+    resetGame()
+}, 2000)
 
 let unselected = document.getElementsByClassName('canClick');
 for (let i = 0; i <= unselected.length - 1; i++) {
@@ -70,7 +81,7 @@ for (let i = 0; i <= squaresPlayerOne.length - 1; i++) {
         squaresPlayerOne[i].classList.remove('canClick')
         let isGameOver = game.checkIfAllSunk(playerOne);
         if (isGameOver) {
-            console.log('PlayerTwo Won the Game')
+            //console.log('PlayerTwo Won the Game')
             resetGame();
         }
     })
@@ -85,11 +96,12 @@ for (let i = 0; i <= squaresPlayerTwo.length - 1; i++) {
     squaresPlayerTwo[i].addEventListener('click', (e) => { 
         squaresPlayerTwo[i].innerHTML = 'X'
         squaresPlayerTwo[i].classList.add('hitSquare');
+        squaresPlayerTwo[i].classList.add('wasClicked');
         game.receiveAttack(coordinates, board);
         playerTwoClick();
         let isGameOver = game.checkIfAllSunk(playerTwo);
         if (isGameOver) {
-            console.log('PlayerOne Won the Game')
+            //console.log('PlayerOne Won the Game')
             resetGame();
         }
     })
@@ -113,15 +125,15 @@ for (let i = 0; i <= unselectedTwo.length - 1; i++) {
         game.missedCoordinatesTwo.push(cords)
         unselectedTwo[i].classList.add('missed');
         unselectedTwo[i].innerHTML = 'X';
-        //unselectedTwo[i].classList.remove('notSelectedTwo')
+        if (unselectedTwo[i].classList.contains('wasClicked')) {
+            return
+        }
         playerTwoClick();
+        unselectedTwo[i].classList.add('wasClicked');
     })
 }
 
-/*ToDo*/
-function resetGame() {
 
-}
 
 
 
