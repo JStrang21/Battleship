@@ -13,6 +13,15 @@ function resetGame() {
     
 }
 
+window.addEventListener("DOMContentLoaded", () => {
+    const patrolBoatElement = document.getElementById("patrolBoat");
+    patrolBoatElement.addEventListener("dragstart", dragStartHandler)
+})
+
+function dragStartHandler(e) {
+    e.dataTransfer.setData("text/plain", console.log(e.target.id))
+}
+
 setTimeout(() => {
     //console.log('hello')
     resetGame()

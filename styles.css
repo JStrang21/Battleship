@@ -10,6 +10,7 @@ body {
     grid-template-rows: .5fr 1fr 1fr;
     gap: 2rem;
 }
+
 .resetButton {
     width: 10rem;
 }
@@ -17,6 +18,24 @@ body {
 .infoBar {
     grid-column: 1 / -1;
     grid-row: 1 / 2;
+}
+
+.shipContainer {
+    background-color: rgb(179, 215, 237);
+    height: 15rem;
+    width: 100%;
+}
+
+#patrolBoat {
+    background-color: lightcoral;
+    width: 2rem;
+    height: 8rem;
+    display: grid;
+    grid-template-rows: 50% 50%;
+}
+.shipSquare {
+    background-color: lightgoldenrodyellow;
+    border: 2px solid lightgray;
 }
 
 .playerOneBoard {
