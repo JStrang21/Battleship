@@ -13,14 +13,35 @@ function resetGame() {
     
 }
 
+//Ships elements to be dragged and dropped
 window.addEventListener("DOMContentLoaded", () => {
     const patrolBoatElement = document.getElementById("patrolBoat");
     patrolBoatElement.addEventListener("dragstart", dragStartHandler)
+
+
+    //Function to control dragging
+function dragStartHandler(e) {
+    e.dataTransfer.setData("text/plain", e.target.id)
+    e.dataTransfer.dropEffect = "move";
+}
+
+//Fn for elements which are dragged over
+function dragOverHandler(e) {
+    e.preventDefault();
+    e.dataTransfer.dropEffect="move";
+    console.log(e)
+}
+
+//Fn for dropping ship onto board squares
+function dropHandler(e) {
+    e.preventDefault();
+    const data= e.dataTransfer.getData("text/plain");
+    e.target.appendChild(document.getElementById(data))
+    console.log(e)
+}
+
 })
 
-function dragStartHandler(e) {
-    e.dataTransfer.setData("text/plain", console.log(e.target.id))
-}
 
 setTimeout(() => {
     //console.log('hello')
@@ -88,6 +109,8 @@ for (let i = 0; i <= squaresPlayerOne.length - 1; i++) {
     let playerOne = game.playerOne
     //squaresPlayerOne[i].innerHTML = board[coordinates].name
     squaresPlayerOne[i].addEventListener('click', (e) => {
+        //Drop testing
+
         squaresPlayerOne[i].innerHTML = 'X';
         game.receiveAttack(coordinates, board);
         squaresPlayerOne[i].classList.add('hitSquare');
