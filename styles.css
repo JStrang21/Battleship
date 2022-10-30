@@ -29,7 +29,7 @@ body {
 #patrolBoat {
     background-color: lightcoral;
     width: 2rem;
-    height: 8rem;
+    height: 3rem;
     display: grid;
     grid-template-rows: 50% 50%;
 }

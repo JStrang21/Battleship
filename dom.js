@@ -1,9 +1,9 @@
 import { gameboardFactory, getRandom } from "./ship.js";
 
 
-let game = gameboardFactory();
-let playerOne = game.playerOne;
-let playerTwo = game.playerTwo;
+let game;
+let playerOne;
+let playerTwo;
 //console.log(game)
 //console.log(playerOne)
 //console.log(playerTwo)
@@ -15,30 +15,44 @@ function resetGame() {
 
 //Ships elements to be dragged and dropped
 window.addEventListener("DOMContentLoaded", () => {
+    game = gameboardFactory();
+    game.playerOne;
+    game.playerTwo;
     const patrolBoatElement = document.getElementById("patrolBoat");
     patrolBoatElement.addEventListener("dragstart", dragStartHandler)
 
-
     //Function to control dragging
-function dragStartHandler(e) {
-    e.dataTransfer.setData("text/plain", e.target.id)
-    e.dataTransfer.dropEffect = "move";
-}
+    function dragStartHandler(e) {
+        e.dataTransfer.setData("text/plain", e.target.id)
+        e.dataTransfer.dropEffect = "move";
+    }
 
-//Fn for elements which are dragged over
-function dragOverHandler(e) {
-    e.preventDefault();
-    e.dataTransfer.dropEffect="move";
-    console.log(e)
-}
+    let unselectedOne = document.getElementsByClassName('notSelected');
+    for (let i = 0; i <= unselectedOne.length - 1; i++) {
+        unselectedOne[i].addEventListener('dragover', (e) => {
+            dragOverHandler(e);
+        })
+    }
+    for (let i = 0; i <= unselectedOne.length - 1; i++) {
+        unselectedOne[i].addEventListener('drop', (e) => {
+            dropHandler(e);
+        })
+    }
 
-//Fn for dropping ship onto board squares
-function dropHandler(e) {
-    e.preventDefault();
-    const data= e.dataTransfer.getData("text/plain");
-    e.target.appendChild(document.getElementById(data))
-    console.log(e)
-}
+    //Fn for elements which are dragged over
+    function dragOverHandler(e) {
+        e.preventDefault();
+        e.dataTransfer.dropEffect="move";
+        console.log(e)
+    }
+
+    //Fn for dropping ship onto board squares
+    function dropHandler(e) {
+        e.preventDefault();
+        const data= e.dataTransfer.getData("text/plain");
+        e.target.appendChild(document.getElementById(data))
+        console.log(e)
+    }
 
 })
 
@@ -64,7 +78,7 @@ function playerTwoClickAdjacent(coordinates) {
     
 }
 
-function matchSquaresToShips(player) {
+/*function matchSquaresToShips(player) {
     let shipSquares = [];
     for (let i = 0; i <= 99; i++) {
         const currentElement = document.querySelector(`[data-value="${i}"`);
@@ -80,7 +94,7 @@ function matchSquaresToShips(player) {
         }
     }
     return shipSquares
-}
+}*/
 function matchSquaresToShips2(player) {
     let shipSquares = [];
     for (let i = 0; i <= 99; i++) {
@@ -99,10 +113,10 @@ function matchSquaresToShips2(player) {
     return shipSquares
 }
 
-let squaresPlayerOne = matchSquaresToShips(playerOne)
+//let squaresPlayerOne = matchSquaresToShips(playerOne)
 let squaresPlayerTwo = matchSquaresToShips2(playerTwo);
 
-for (let i = 0; i <= squaresPlayerOne.length - 1; i++) {
+/*for (let i = 0; i <= squaresPlayerOne.length - 1; i++) {
     squaresPlayerOne[i].style.backgroundColor = "green";
     let coordinates = squaresPlayerOne[i].dataset.value;
     let board = game.boardOne
@@ -121,7 +135,7 @@ for (let i = 0; i <= squaresPlayerOne.length - 1; i++) {
             resetGame();
         }
     })
-}
+}*/
 
 for (let i = 0; i <= squaresPlayerTwo.length - 1; i++) {
     //squaresPlayerTwo[i].style.backgroundColor = "green";
@@ -142,7 +156,7 @@ for (let i = 0; i <= squaresPlayerTwo.length - 1; i++) {
     })
 }
 
-let unselectedOne = document.getElementsByClassName('notSelected');
+/*let unselectedOne = document.getElementsByClassName('notSelected');
 for (let i = 0; i <= unselectedOne.length - 1; i++) {
     unselectedOne[i].addEventListener('click', () => {
         let cords = unselectedOne[i].dataset.value;
@@ -150,8 +164,9 @@ for (let i = 0; i <= unselectedOne.length - 1; i++) {
         unselectedOne[i].classList.add('missed');
         unselectedOne[i].innerHTML = 'X'
         unselectedOne[i].classList.remove('canClick')
+        console.log(game.missedCoordinatesOne);
     })
-}
+}*/
 
 let unselectedTwo = document.getElementsByClassName('notSelectedTwo');
 for (let i = 0; i <= unselectedTwo.length - 1; i++) {
@@ -168,7 +183,10 @@ for (let i = 0; i <= unselectedTwo.length - 1; i++) {
     })
 }
 
+//Converts array integer to board coordinate ex: 0 = A1/8 = I1
+//Then display those in box at above player two
+function convertArrayCordToBoardCord(missedCoordinates) {
 
-
+}
 
 
