@@ -16,17 +16,12 @@ function resetGame() {
 //Maybe rather than drag and drop-implement mini pop up board and go through list of boats and user and can hover over board and place on highlighted area
 //https://michalosman.github.io/battleship/
 function miniBoard() {
-    let testGame = gameboardFactory();
     let p1 = game.playerOne;
 
 }
 
 //Ships elements to be dragged and dropped
-window.addEventListener("DOMContentLoaded", () => {
-    /*game = gameboardFactory();
-    game.playerOne;
-    playerTwo = game.playerTwo;*/
-
+/*window.addEventListener("DOMContentLoaded", () => {
     //Creates boats for playerOne to place
     //let boats = createBoats();
     const patrolBoatElement = document.getElementById("patrolBoat");
@@ -67,7 +62,7 @@ window.addEventListener("DOMContentLoaded", () => {
         console.log(e.dataTransfer)
     }
 
-})
+})*/
 
 
 setTimeout(() => {
@@ -82,6 +77,8 @@ for (let i = 0; i <= unselected.length - 1; i++) {
     })
 }
 
+//AI ranomly clicks a square
+//TODO implement "smart" AI
 function playerTwoClick() {
     let random = getRandom(0, unselected.length);
     unselected[random].click()
@@ -90,6 +87,10 @@ function playerTwoClick() {
 function playerTwoClickAdjacent(coordinates) {
     
 }
+
+//Matches ships to designated squares and returns array of where ships are located
+//let squaresPlayerOne = matchSquaresToShips(playerOne)
+let squaresPlayerTwo = matchSquaresToShips2(playerTwo);
 
 /*function matchSquaresToShips(player) {
     let shipSquares = [];
@@ -126,9 +127,7 @@ function matchSquaresToShips2(player) {
     return shipSquares
 }
 
-//let squaresPlayerOne = matchSquaresToShips(playerOne)
-let squaresPlayerTwo = matchSquaresToShips2(playerTwo);
-
+//Loop to listen for clicks of ships and then to update ship/square to reflect the hit
 /*for (let i = 0; i <= squaresPlayerOne.length - 1; i++) {
     squaresPlayerOne[i].style.backgroundColor = "green";
     let coordinates = squaresPlayerOne[i].dataset.value;
@@ -149,7 +148,6 @@ let squaresPlayerTwo = matchSquaresToShips2(playerTwo);
         }
     })
 }*/
-
 for (let i = 0; i <= squaresPlayerTwo.length - 1; i++) {
     //squaresPlayerTwo[i].style.backgroundColor = "green";
     let coordinates = squaresPlayerTwo[i].dataset.valuetwo;
@@ -169,6 +167,7 @@ for (let i = 0; i <= squaresPlayerTwo.length - 1; i++) {
     })
 }
 
+//Loop which listens for a click to a square which isn't occupied by a ship and marks square as clicked
 /*let unselectedOne = document.getElementsByClassName('notSelected');
 for (let i = 0; i <= unselectedOne.length - 1; i++) {
     unselectedOne[i].addEventListener('click', () => {
@@ -180,7 +179,6 @@ for (let i = 0; i <= unselectedOne.length - 1; i++) {
         console.log(game.missedCoordinatesOne);
     })
 }*/
-
 let unselectedTwo = document.getElementsByClassName('notSelectedTwo');
 for (let i = 0; i <= unselectedTwo.length - 1; i++) {
     unselectedTwo[i].addEventListener('click', () => {
