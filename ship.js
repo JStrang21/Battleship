@@ -68,7 +68,7 @@ function gameboardFactory() {
     const playerOne = playerFactory();
     const playerTwo = playerFactory();
     //issue with placeships fn
-    placeShips(playerOne, boardOne);
+    //placeShips(playerOne, boardOne);
     placeShips(playerTwo, boardTwo);
 
     const receiveAttack = (coordinates, board) => {
@@ -105,11 +105,9 @@ function gameboardFactory() {
         return true
     }
 
-    return {boardOne, boardTwo, playerOne, playerTwo, receiveAttack, missedCoordinatesOne, missedCoordinatesTwo, checkIfAllSunk}
+    return {playerOne, boardOne, boardTwo, playerTwo, receiveAttack, missedCoordinatesOne, missedCoordinatesTwo, checkIfAllSunk}
 }
-let game = gameboardFactory();
-let playerOne = game.playerOne;
-//console.log(game.receiveAttack(10, game.boardOne))
+
 
 function placeShips(player, board) {
     for (let ship in player) {

@@ -5,8 +5,8 @@ import { gameboardFactory, getRandom } from "./ship.js";
 const game = gameboardFactory();
 const playerOne = game.playerOne;
 const playerTwo = game.playerTwo;
-//console.log(game)
-console.log(playerTwo)
+console.log(playerTwo[0].actualLocation[0]);
+console.log(playerOne);
 
 /*ToDo*/
 function resetGame() {
@@ -21,7 +21,7 @@ function miniBoard() {
 }
 
 //Ships elements to be dragged and dropped
-/*window.addEventListener("DOMContentLoaded", () => {
+window.addEventListener("DOMContentLoaded", () => {
     //Creates boats for playerOne to place
     //let boats = createBoats();
     const patrolBoatElement = document.getElementById("patrolBoat");
@@ -31,7 +31,7 @@ function miniBoard() {
     function dragStartHandler(e) {
         e.dataTransfer.setData("text/plain", e.target.id)
         e.dataTransfer.dropEffect = "move";
-        console.log(e)
+        //console.log(e)
     }
 
     let unselectedOne = document.getElementsByClassName('notSelected');
@@ -59,10 +59,16 @@ function miniBoard() {
         e.preventDefault();
         const data = e.dataTransfer.getData("text/plain");
         e.target.appendChild(document.getElementById(data));
-        console.log(e.dataTransfer)
+        if (data === "patrolBoat") {
+            /*console.log(e);
+            console.log(e.dataTransfer);
+            console.log(e.originalTarget.id);*/
+            playerOne[0].actualLocation[0] = parseInt(e.originalTarget.id);
+            playerOne[0].actualLocation[1] = parseInt(e.originalTarget.id) + 1;
+            console.log(playerOne);
+        }
     }
-
-})*/
+})
 
 
 setTimeout(() => {
