@@ -25,7 +25,9 @@ window.addEventListener("DOMContentLoaded", () => {
     //Creates boats for playerOne to place
     //let boats = createBoats();
     const patrolBoatElement = document.getElementById("patrolBoat");
-    patrolBoatElement.addEventListener("dragstart", dragStartHandler)
+    patrolBoatElement.addEventListener("dragstart", dragStartHandler);
+
+    
 
     //Function to control dragging
     function dragStartHandler(e) {
@@ -60,8 +62,8 @@ window.addEventListener("DOMContentLoaded", () => {
         const data = e.dataTransfer.getData("text/plain");
         e.target.appendChild(document.getElementById(data));
         if (data === "patrolBoat") {
-            console.log(playerOne);
-            /*console.log(e);
+            /*console.log(playerOne);
+            console.log(e);
             console.log(e.dataTransfer);
             console.log(e.originalTarget.id);*/
             const targetID = parseInt(e.originalTarget.id);
