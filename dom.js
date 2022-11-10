@@ -31,19 +31,19 @@ window.addEventListener("DOMContentLoaded", () => {
     function dragStartHandler(e) {
         e.dataTransfer.setData("text/plain", e.target.id)
         e.dataTransfer.dropEffect = "move";
-        //console.log(e)
+        console.log(e)
     }
 
     let unselectedOne = document.getElementsByClassName('notSelected');
     for (let i = 0; i <= unselectedOne.length - 1; i++) {
         unselectedOne[i].addEventListener('dragover', (e) => {
             dragOverHandler(e);
-            dropHandler(e);
+            //dropHandler(e);
         })
     }
     for (let i = 0; i <= unselectedOne.length - 1; i++) {
         unselectedOne[i].addEventListener('drop', (e) => {
-            //dropHandler(e);
+            dropHandler(e);
         })
     }
 
@@ -60,15 +60,33 @@ window.addEventListener("DOMContentLoaded", () => {
         const data = e.dataTransfer.getData("text/plain");
         e.target.appendChild(document.getElementById(data));
         if (data === "patrolBoat") {
+            console.log(playerOne);
             /*console.log(e);
             console.log(e.dataTransfer);
             console.log(e.originalTarget.id);*/
-            playerOne[0].actualLocation[0] = parseInt(e.originalTarget.id);
-            playerOne[0].actualLocation[1] = parseInt(e.originalTarget.id) + 1;
-            console.log(playerOne);
+            const targetID = parseInt(e.originalTarget.id);
+            playerOne[0].actualLocation[0] = targetID;
+            playerOne[0].actualLocation[1] = targetID + 1;
+            let boardElement1 = document.getElementById(`${targetID}`);
+            boardElement1.classList.add('selectedSquare');
+            boardElement1.classList.remove('notSelectedTwo');
+            let boardElement2 = document.getElementById(`${targetID + 1}`);
+            boardElement2.classList.add('selectedSquare');
+            boardElement2.classList.remove('notSelectedTwo');
+            
+            let boardOne = game.boardOne;
+            boardOne[targetID] = playerOne[0];
+            boardOne[targetID + 1] = playerOne[0];
+
+            game.receiveAttack(1, boardOne);
+            game.receiveAttack(2, boardOne);
+
+            console.log(playerOne[0].isSunk());
+            console.log(game.boardOne);
         }
     }
 })
+
 
 
 setTimeout(() => {
