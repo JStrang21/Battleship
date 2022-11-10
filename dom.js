@@ -1,23 +1,34 @@
 import { gameboardFactory, getRandom } from "./ship.js";
 
+//Need to document better-hard coming back to work on after a few weeks
 
-let game;
-let playerOne;
-let playerTwo;
+const game = gameboardFactory();
+const playerOne = game.playerOne;
+const playerTwo = game.playerTwo;
 //console.log(game)
-//console.log(playerOne)
-//console.log(playerTwo)
+console.log(playerTwo)
 
 /*ToDo*/
 function resetGame() {
     
 }
 
+//Maybe rather than drag and drop-implement mini pop up board and go through list of boats and user and can hover over board and place on highlighted area
+//https://michalosman.github.io/battleship/
+function miniBoard() {
+    let testGame = gameboardFactory();
+    let p1 = game.playerOne;
+
+}
+
 //Ships elements to be dragged and dropped
 window.addEventListener("DOMContentLoaded", () => {
-    game = gameboardFactory();
+    /*game = gameboardFactory();
     game.playerOne;
-    game.playerTwo;
+    playerTwo = game.playerTwo;*/
+
+    //Creates boats for playerOne to place
+    //let boats = createBoats();
     const patrolBoatElement = document.getElementById("patrolBoat");
     patrolBoatElement.addEventListener("dragstart", dragStartHandler)
 
@@ -25,17 +36,19 @@ window.addEventListener("DOMContentLoaded", () => {
     function dragStartHandler(e) {
         e.dataTransfer.setData("text/plain", e.target.id)
         e.dataTransfer.dropEffect = "move";
+        console.log(e)
     }
 
     let unselectedOne = document.getElementsByClassName('notSelected');
     for (let i = 0; i <= unselectedOne.length - 1; i++) {
         unselectedOne[i].addEventListener('dragover', (e) => {
             dragOverHandler(e);
+            dropHandler(e);
         })
     }
     for (let i = 0; i <= unselectedOne.length - 1; i++) {
         unselectedOne[i].addEventListener('drop', (e) => {
-            dropHandler(e);
+            //dropHandler(e);
         })
     }
 
@@ -43,15 +56,15 @@ window.addEventListener("DOMContentLoaded", () => {
     function dragOverHandler(e) {
         e.preventDefault();
         e.dataTransfer.dropEffect="move";
-        console.log(e)
+        //console.log(e)
     }
 
     //Fn for dropping ship onto board squares
     function dropHandler(e) {
         e.preventDefault();
-        const data= e.dataTransfer.getData("text/plain");
-        e.target.appendChild(document.getElementById(data))
-        console.log(e)
+        const data = e.dataTransfer.getData("text/plain");
+        e.target.appendChild(document.getElementById(data));
+        console.log(e.dataTransfer)
     }
 
 })

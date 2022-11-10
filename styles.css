@@ -107,3 +107,7 @@ body {
 .boardSide {
     background-color: lightgrey;
 }
+
+.selectedSquare {
+    background-color: black;
+}

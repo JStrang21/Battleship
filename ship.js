@@ -28,6 +28,7 @@ function shipFactory(length, name) {
             shipLength[i] = 3;
             i++;
         }
+        console.log("Sunk!!!");
         return true;
     }
     return {name, hit, shipLength, isSunk, actualLocation}
@@ -119,6 +120,7 @@ function placeShips(player, board) {
             random = getRandom(0, board.length)
             check = checkForOpenSpace(board, player[ship], random);
         }
+        //console.log(check);
         if (check.space) {
             placement(board, player[ship], random, check.direction)
         }
@@ -305,7 +307,12 @@ function checkLeft(board, random, shipsLength) {
         return false
     }
     let increment = 0;
+    let possible = new Set([0, 10, 20, 30, 40, 50, 60, 70, 80, 90])
     for (let i = 0; i <=  shipsLength - 1; i++) {
+        let badMove = random + increment;
+        if ((i !== shipsLength - 1) && possible.has(badMove)) {
+            return false;
+        }
         if (board[random + increment] !== 0) {
             return false;
         }
@@ -321,7 +328,12 @@ function checkRight(board, random, shipsLength) {
         return false
     }
     let increment = 0;
+    let possible = new Set([9, 19, 29, 39, 49, 59, 69, 79, 89, 99])
     for (let i = 0; i <=  shipsLength - 1; i++) {
+        let badMove = random + increment;
+        if ((i !== shipsLength - 1) && possible.has(badMove)) {
+            return false;
+        }
         if (board[random + increment] !== 0) {
             return false;    
         }
