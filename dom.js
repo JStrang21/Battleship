@@ -72,9 +72,16 @@ window.addEventListener("DOMContentLoaded", () => {
         for (let ship in playerOne) {
             if (playerOne[ship].stringName === boatName) {
                 boatLength = playerOne[ship].shipLength.length;
+                console.log(playerOne[ship])
             }
         }
         let unselectedID = parseInt(unselected.id);
+        console.log(unselectedID);
+        console.log(game.boardOne);
+        const lastSquare = document.getElementById(`${unselectedID}`);
+        lastSquare.classList.remove('selectedSquare');
+        lastSquare.classList.add('notSelectedTwo');
+        game.boardOne[unselectedID - 1] = 0;
         for (let i = 0; i < boatLength; i++) {
             let square = document.getElementById(`${unselectedID + i}`)
             square.classList.remove('selectedSquare');
@@ -95,6 +102,29 @@ window.addEventListener("DOMContentLoaded", () => {
         e.preventDefault();
         const data = e.dataTransfer.getData("text/plain");
         e.target.appendChild(document.getElementById(data));
+
+        /*let length;
+        for (let ship in playerOne) {
+            if (playerOne[ship].stringName === data) {
+                length = playerOne[ship].shipLength.length;
+            }
+        }
+        let shipIDs = [];
+        let targetNodes = [];
+        for (let i = 1, j = 0; i <= length; i++) {
+            let id = data + i;
+            shipIDs.push(id);
+            targetNodes.push(parseInt(e.target.id) + j);
+            j++;
+        }
+        for (let i in targetNodes) {
+            const square = document.getElementById(`${targetNodes[i]}`);
+            const shipsquare = document.getElementById(`${shipIDs[i]}`);
+            square.appendChild(shipsquare);
+            console.log(game.boardOne);
+            console.log(playerOne);
+        }*/        
+
         if (data === "patrolBoat") {
             const targetID = parseInt(e.originalTarget.id);
             playerOne[0].actualLocation[0] = targetID;
@@ -124,11 +154,14 @@ function switchDirection(s) {
                 if (checkY(ship, location)) {
                     //rotate to y
                     rotateY(ship, location, s);
+                    //console.log(ship);
+                    //console.log(game.boardOne);
                 }
             }
             if (currentDirection === 'y') {
                 if (checkX(ship, location, s)) {
                     //rotate to x
+                    rotateX(ship, location, s);
                 }
             }
         }
@@ -137,17 +170,43 @@ function switchDirection(s) {
 function checkY(s, location) {
     let board = game.boardOne;
     let increment = 10;
+    //Might have to start i=10 bc first ship square remains stationary
     for (let i = 0; i < s.shipLength.length; i++) {
         if (board[location + increment] !== 0) {
             return false;
         }
         increment += 10;
     }
-    //s.direction = "y";
+    s.direction = "y";
     return true;
 }
 function rotateY(s, location, square) {
-    console.log(square.parentNode);
+    clearXDirection(s, location, square);
+    setYDirection(s, location, square);
+}
+function clearXDirection(s, location) {
+    const length = s.shipLength.length;
+    let calcLocation = location - 1;
+    for (let i = 0; i < length; i++) {
+        let square = document.getElementById(`${location + i}`);
+        square.classList.remove("selectedSquare");
+        square.classList.add("notSelectedTwo");
+        s.actualLocation[i] = 0;
+        game.boardOne[location + i] = 0;
+    }
+}
+function setYDirection(s, location) {
+    const length = s.shipLength.length;
+    let calcLocation = location - 1;
+    let increment = 0;
+    for (let i = 0; i < length; i++) {
+        let square = document.getElementById(`${location + increment}`);
+        square.classList.add("selectedSquare");
+        square.classList.remove("notSelectedTwo");
+        s.actualLocation[i] = calcLocation + increment;
+        game.boardOne[calcLocation + increment] = s;
+        increment += 10;
+    }
 }
 
 function checkX(s, location) {
@@ -159,8 +218,38 @@ function checkX(s, location) {
         }
         increment += 1;
     }
-    //s.direction = "x";
+    s.direction = "x";
     return true;
+}
+function rotateX(s, location, square) {
+    clearYDirection(s, location, square);
+    setXDirection(s, location, square);
+}
+function clearYDirection(s, location) {
+    let calcLocation = location - 1;
+    const length = s.shipLength.length;
+    let increment = 0;
+    for (let i = 0; i < length; i++) {
+        let square = document.getElementById(`${location + increment}`);
+        square.classList.remove("selectedSquare");
+        square.classList.add("notSelectedTwo");
+        s.actualLocation[i] = 0;
+        game.boardOne[calcLocation + increment] = 0;
+        increment += 10;
+    }
+}
+function setXDirection(s, location) {
+    const length = s.shipLength.length;
+    let calcLocation = location - 1;
+    let increment = 0;
+    for (let i = 0; i < length; i++) {
+        let square = document.getElementById(`${location + increment}`);
+        square.classList.add("selectedSquare");
+        square.classList.remove("notSelectedTwo");
+        s.actualLocation[i] = calcLocation + increment;
+        game.boardOne[calcLocation + increment] = s;
+        increment += 1;
+    }
 }
 
 

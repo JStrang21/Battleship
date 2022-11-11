@@ -37,15 +37,19 @@ body {
 /*TODO: seperate boats/make ship container look nice*/
 #patrolBoat {
     /*TODO: inherit size from board square so the sizes match*/
-    background-color: lightcoral;
-    width: 2rem;
-    height: 3rem;
+    width: inherit;
+    height: 2rem;
     display: grid;
-    grid-template-rows: 50% 50%;
+    grid-template-columns: 50% 50%;
+    z-index: -1;
 }
+/*TODO: add not dragged class so their widths dont go 100*/
+/*#patrolBoat.notDragged {
+    width: 4rem;
+    height: 2rem;
+}*/
 .shipSquare {
     background-color: lightgoldenrodyellow;
-    border: 2px solid lightgray;
 }
 
 .playerOneBoard {
@@ -63,6 +67,9 @@ body {
 .p1square {
     border: 1px solid blue;
     background-color: lightblue;
+}
+.p1square.selectedSquare {
+    background-color: lightgoldenrodyellow;
 }
 
 .playerTwoBoard {
