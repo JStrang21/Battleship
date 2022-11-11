@@ -1,5 +1,6 @@
 function shipFactory(length, name, sName) {
     let shipLength = [];
+    let direction = "x";
     let stringName = sName;
     let actualLocation = [];
     let i = 0;
@@ -32,7 +33,7 @@ function shipFactory(length, name, sName) {
         console.log("Sunk!!!");
         return true;
     }
-    return {name, hit, shipLength, isSunk, actualLocation, stringName}
+    return {name, hit, shipLength, isSunk, actualLocation, stringName, direction}
 }
 
 function gameboardFactory() {
@@ -127,39 +128,6 @@ function placeShips(player, board) {
     }
     return board
 }
-
-/*function convertCoordinates(coordinates) {
-    let splitCoords = coordinates.split("")
-    let letter = convertLetter(splitCoords[0]);
-    let number = splitCoords[1] - 1;
-    let trueCoord = Number(number + "" + letter);
-    return trueCoord
-}
-
-function convertLetter(letter) {
-    switch(letter) {
-        case 'A':
-            return 0
-        case 'B':
-            return 1
-        case 'C':
-            return 2
-        case 'D':
-            return 3
-        case 'E':
-            return 4
-        case 'F':
-            return 5
-        case 'G':
-            return 6
-        case 'H':
-            return 7
-        case 'I':
-            return 8
-        case 'J':
-            return 9
-    }
-}*/
 
 function checkForOpenSpace(board, ship, random) {
     let shipsLength = ship.shipLength.length;
@@ -363,7 +331,7 @@ function playerFactory() {
 
 export {
     shipFactory, playerFactory, gameboardFactory, checkForOpenSpace,
-    checkTop, checkBottom, checkLeft, checkRight, getRandom
+    checkTop, checkBottom, checkLeft, checkRight, getRandom, checkForOpenSpace, placement
 }
 
 

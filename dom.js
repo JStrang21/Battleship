@@ -1,14 +1,13 @@
-import { gameboardFactory, getRandom } from "./ship.js";
+import { checkForOpenSpace, placement, checkBottom, gameboardFactory, getRandom } from "./ship.js";
 
-//Need to document better-hard coming back to work on after a few weeks
+//TODO
+//Need to document better--difficult to read after not working on it
+//Need to refactor when complete-reduce redundancy/clean up/document
 
 const game = gameboardFactory();
 const playerOne = game.playerOne;
 const playerTwo = game.playerTwo;
-console.log(playerTwo[0].actualLocation[0]);
-console.log(playerOne);
-
-/*ToDo*/
+/*TODO*/
 function resetGame() {
     
 }
@@ -24,8 +23,7 @@ function miniBoard() {
 
 //Ships elements to be dragged and dropped
 window.addEventListener("DOMContentLoaded", () => {
-    //Creates boats for playerOne to place
-    //let boats = createBoats();
+    //Ship elements to be placed in heading area
     const patrolBoatElement = document.getElementById("patrolBoat");
     patrolBoatElement.addEventListener("dragstart", dragStartHandler);
     const submarine = document.getElementById("submarine");
@@ -36,8 +34,13 @@ window.addEventListener("DOMContentLoaded", () => {
     battleship.addEventListener("dragstart", dragStartHandler);
     const carrier = document.getElementById("carrier");
     carrier.addEventListener("dragstart", dragStartHandler);
+    let bList = [patrolBoatElement, submarine, destroyer, battleship, carrier];
 
-
+    for (let ship in bList) {
+        bList[ship].addEventListener("click", () => {
+            switchDirection(bList[ship]);
+        })
+    }
 
     //Function to control dragging
     function dragStartHandler(e) {
@@ -49,7 +52,6 @@ window.addEventListener("DOMContentLoaded", () => {
     for (let i = 0; i <= unselectedOne.length - 1; i++) {
         unselectedOne[i].addEventListener('dragover', (e) => {
             dragOverHandler(e);
-            //dropHandler(e);
         })
     }
     for (let i = 0; i <= unselectedOne.length - 1; i++) {
@@ -77,6 +79,8 @@ window.addEventListener("DOMContentLoaded", () => {
             let square = document.getElementById(`${unselectedID + i}`)
             square.classList.remove('selectedSquare');
             square.classList.add('notSelectedTwo');
+            let boardOne = game.boardOne;
+            boardOne[unselectedID + i] = 0;
         }
     }
 
@@ -84,7 +88,6 @@ window.addEventListener("DOMContentLoaded", () => {
     function dragOverHandler(e) {
         e.preventDefault();
         e.dataTransfer.dropEffect="move";
-        //console.log(e)
     }
 
     //Fn for dropping ship onto board squares
@@ -93,10 +96,6 @@ window.addEventListener("DOMContentLoaded", () => {
         const data = e.dataTransfer.getData("text/plain");
         e.target.appendChild(document.getElementById(data));
         if (data === "patrolBoat") {
-            /*console.log(playerOne);
-            console.log(e);
-            console.log(e.dataTransfer);
-            console.log(e.originalTarget.id);*/
             const targetID = parseInt(e.originalTarget.id);
             playerOne[0].actualLocation[0] = targetID;
             playerOne[0].actualLocation[1] = targetID + 1;
@@ -110,13 +109,59 @@ window.addEventListener("DOMContentLoaded", () => {
             let boardOne = game.boardOne;
             boardOne[targetID] = playerOne[0];
             boardOne[targetID + 1] = playerOne[0];
-            //console.log(boardOne);
-            //console.log(playerOne)
-            /*game.receiveAttack(1, boardOne);
-            game.receiveAttack(2, boardOne);*/
         }
     }
 })
+
+function switchDirection(s) {
+    const location = parseInt(s.parentNode.id);
+    const shipName = s.id;
+    for (let i in playerOne) {
+        if (playerOne[i].stringName === shipName) {
+            const ship = playerOne[i];
+            const currentDirection = ship.direction;
+            if (currentDirection === 'x') {
+                if (checkY(ship, location)) {
+                    //rotate to y
+                    rotateY(ship, location, s);
+                }
+            }
+            if (currentDirection === 'y') {
+                if (checkX(ship, location, s)) {
+                    //rotate to x
+                }
+            }
+        }
+    }
+}
+function checkY(s, location) {
+    let board = game.boardOne;
+    let increment = 10;
+    for (let i = 0; i < s.shipLength.length; i++) {
+        if (board[location + increment] !== 0) {
+            return false;
+        }
+        increment += 10;
+    }
+    //s.direction = "y";
+    return true;
+}
+function rotateY(s, location, square) {
+    console.log(square.parentNode);
+}
+
+function checkX(s, location) {
+    let board = game.boardOne;
+    let increment = 1;
+    for (let i = 0; i < s.shipLength.length; i++) {
+        if (board[location + increment] !== 0) {
+            return false;
+        }
+        increment += 1;
+    }
+    //s.direction = "x";
+    return true;
+}
 
 
 const startButton = document.querySelector(".startButton");
