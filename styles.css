@@ -27,15 +27,16 @@ body {
     gap: 1rem;
 }
 
-.shipThree {
+/*.shipThree {
     background-color: lightcoral;
     width: 2rem;
     height: 4rem;
     display: grid;
     grid-template-rows: 33% 33% 33%;
-} 
+}*/ 
 /*TODO: seperate boats/make ship container look nice*/
 #patrolBoat {
+    /*TODO: inherit size from board square so the sizes match*/
     background-color: lightcoral;
     width: 2rem;
     height: 3rem;

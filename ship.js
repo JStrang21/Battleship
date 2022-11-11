@@ -1,5 +1,6 @@
-function shipFactory(length, name) {
+function shipFactory(length, name, sName) {
     let shipLength = [];
+    let stringName = sName;
     let actualLocation = [];
     let i = 0;
     while (i <= length - 1) {
@@ -31,7 +32,7 @@ function shipFactory(length, name) {
         console.log("Sunk!!!");
         return true;
     }
-    return {name, hit, shipLength, isSunk, actualLocation}
+    return {name, hit, shipLength, isSunk, actualLocation, stringName}
 }
 
 function gameboardFactory() {
@@ -350,10 +351,11 @@ function getRandom(min, max) {
 
 function playerFactory() {
     let lengths = [2, 3, 3, 4, 5];
-    let names = [1, 2, 3, 4, 5]
+    let names = [1, 2, 3, 4, 5];
+    let stringName = ["patrolBoat", "submarine", "destroyer", "battleship", "carrier"];
     let ships = [];
     for (let i in lengths) {
-        let newShip = shipFactory(lengths[i], names[i]);
+        let newShip = shipFactory(lengths[i], names[i], stringName[i]);
         ships.push(newShip);
     }
     return ships

@@ -19,6 +19,8 @@ function miniBoard() {
     let p1 = game.playerOne;
 
 }
+//Choose one boat at a time and use arrow to point in which direction you want it to face
+//Then when placing boat use :hover for board squares to highlight which element it will be placed on
 
 //Ships elements to be dragged and dropped
 window.addEventListener("DOMContentLoaded", () => {
@@ -26,14 +28,21 @@ window.addEventListener("DOMContentLoaded", () => {
     //let boats = createBoats();
     const patrolBoatElement = document.getElementById("patrolBoat");
     patrolBoatElement.addEventListener("dragstart", dragStartHandler);
+    const submarine = document.getElementById("submarine");
+    submarine.addEventListener("dragstart", dragStartHandler);
+    const destroyer = document.getElementById("destroyer");
+    destroyer.addEventListener("dragstart", dragStartHandler);
+    const battleship = document.getElementById("battleship");
+    battleship.addEventListener("dragstart", dragStartHandler);
+    const carrier = document.getElementById("carrier");
+    carrier.addEventListener("dragstart", dragStartHandler);
 
-    
+
 
     //Function to control dragging
     function dragStartHandler(e) {
         e.dataTransfer.setData("text/plain", e.target.id)
         e.dataTransfer.dropEffect = "move";
-        console.log(e)
     }
 
     let unselectedOne = document.getElementsByClassName('notSelected');
@@ -47,6 +56,28 @@ window.addEventListener("DOMContentLoaded", () => {
         unselectedOne[i].addEventListener('drop', (e) => {
             dropHandler(e);
         })
+    }
+    for (let i = 0; i <= unselectedOne.length - 1; i++) {
+        unselectedOne[i].addEventListener('dragleave', (e) => {
+            dragLeaveHandler(e, unselected[i]);
+        })
+    }
+
+    function dragLeaveHandler(e, unselected) {
+        e.preventDefault();
+        const boatName = e.originalTarget.parentElement.id;
+        let boatLength;
+        for (let ship in playerOne) {
+            if (playerOne[ship].stringName === boatName) {
+                boatLength = playerOne[ship].shipLength.length;
+            }
+        }
+        let unselectedID = parseInt(unselected.id);
+        for (let i = 0; i < boatLength; i++) {
+            let square = document.getElementById(`${unselectedID + i}`)
+            square.classList.remove('selectedSquare');
+            square.classList.add('notSelectedTwo');
+        }
     }
 
     //Fn for elements which are dragged over
@@ -79,17 +110,19 @@ window.addEventListener("DOMContentLoaded", () => {
             let boardOne = game.boardOne;
             boardOne[targetID] = playerOne[0];
             boardOne[targetID + 1] = playerOne[0];
-
-            game.receiveAttack(1, boardOne);
-            game.receiveAttack(2, boardOne);
-
-            console.log(playerOne[0].isSunk());
-            console.log(game.boardOne);
+            //console.log(boardOne);
+            //console.log(playerOne)
+            /*game.receiveAttack(1, boardOne);
+            game.receiveAttack(2, boardOne);*/
         }
     }
 })
 
 
+const startButton = document.querySelector(".startButton");
+startButton.addEventListener("click", () => {
+
+})
 
 setTimeout(() => {
     //console.log('hello')
