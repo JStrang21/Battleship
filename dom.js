@@ -119,11 +119,6 @@ window.addEventListener("DOMContentLoaded", () => {
             let boardOne = game.boardOne;
             boardOne[otherID] = ship;
             boardOne[otherID + i] = ship;
-            console.log(boardOne);
-            console.log(ship);
-            console.log(targetID);
-            console.log(otherID);
-
         }
         /*let shipIDs = [];
         let targetNodes = [];

@@ -25,6 +25,8 @@ body {
     height: 15rem;
     width: 100%;  
     gap: 1rem;
+    display: flex;
+    justify-content: space-evenly;
 }
 
 /*.shipThree {
@@ -35,19 +37,17 @@ body {
     grid-template-rows: 33% 33% 33%;
 }*/ 
 /*TODO: seperate boats/make ship container look nice*/
-/*#patrolBoat {
-    TODO: inherit size from board square so the sizes match
-    width: inherit;
-    height: 2rem;
-    display: grid;
-    grid-template-columns: 50% 50%;
-    z-index: -1;
-}*/
 /*TODO: add not dragged class so their widths dont go 100*/
 /*#patrolBoat.notDragged {
     width: 4rem;
     height: 2rem;
 }*/
+#patrolBoat {
+    width: inherit;
+    height: 2rem;
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
 #submarine {
     width: inherit;
     height: 2rem;
