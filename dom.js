@@ -72,12 +72,9 @@ window.addEventListener("DOMContentLoaded", () => {
         for (let ship in playerOne) {
             if (playerOne[ship].stringName === boatName) {
                 boatLength = playerOne[ship].shipLength.length;
-                console.log(playerOne[ship])
             }
         }
         let unselectedID = parseInt(unselected.id);
-        console.log(unselectedID);
-        console.log(game.boardOne);
         const lastSquare = document.getElementById(`${unselectedID}`);
         lastSquare.classList.remove('selectedSquare');
         lastSquare.classList.add('notSelectedTwo');
@@ -102,14 +99,33 @@ window.addEventListener("DOMContentLoaded", () => {
         e.preventDefault();
         const data = e.dataTransfer.getData("text/plain");
         e.target.appendChild(document.getElementById(data));
-
-        /*let length;
-        for (let ship in playerOne) {
-            if (playerOne[ship].stringName === data) {
-                length = playerOne[ship].shipLength.length;
+        
+        let length;
+        let ship;
+        for (let i in playerOne) {
+            if (playerOne[i].stringName === data) {
+                length = playerOne[i].shipLength.length;
+                ship = playerOne[i];
             }
         }
-        let shipIDs = [];
+       
+        const targetID = parseInt(e.originalTarget.id);
+        for (let i = 0; i < length; i++) {
+            let otherID = targetID - 1;
+            ship.actualLocation[i] = otherID + i;
+            let boardElement = document.getElementById(`${targetID + i}`);
+            boardElement.classList.add('selectedSquare');
+            boardElement.classList.remove('notSelected');
+            let boardOne = game.boardOne;
+            boardOne[otherID] = ship;
+            boardOne[otherID + i] = ship;
+            console.log(boardOne);
+            console.log(ship);
+            console.log(targetID);
+            console.log(otherID);
+
+        }
+        /*let shipIDs = [];
         let targetNodes = [];
         for (let i = 1, j = 0; i <= length; i++) {
             let id = data + i;
