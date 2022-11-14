@@ -43,20 +43,44 @@ body {
     height: 2rem;
 }*/
 #patrolBoat {
+    background-color: lightgreen;
     width: inherit;
     height: 2rem;
     display: grid;
     grid-template-columns: 50% 50%;
 }
 #submarine {
+    background-color: lightgreen;
     width: inherit;
     height: 2rem;
     display: grid;
     grid-template-columns: 33% 33% 33%;
 }
-.shipSquare {
-    background-color: lightgoldenrodyellow;
+#destroyer {
+    background-color: lightgreen;
+    width: inherit;
+    height: 2rem;
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
 }
+#battleship {
+    background-color: lightgreen;
+    width: inherit;
+    height: 2rem;
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+}
+#carrier {
+    background-color: lightgreen;
+    width: inherit;
+    height: 2rem;
+    display: grid;
+    /*TODO: shorthand way for columns*/
+    grid-template-columns: 20% 20% 20% 20% 20%;
+}
+/*.shipSquare {
+    background-color: lightgoldenrodyellow;
+}*/
 
 .playerOneBoard {
     justify-self: center;
@@ -74,7 +98,7 @@ body {
     border: 1px solid blue;
     background-color: lightblue;
 }
-.p1square.selectedSquare {
+.p1square.selectedSquareOne {
     background-color: lightgoldenrodyellow;
 }
 
@@ -132,5 +156,9 @@ body {
 }
 
 .selectedSquare {
+    background-color: black;
+}
+
+.p1square.shipPlaced {
     background-color: black;
 }

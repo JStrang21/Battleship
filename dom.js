@@ -24,17 +24,54 @@ function miniBoard() {
 //Ships elements to be dragged and dropped
 window.addEventListener("DOMContentLoaded", () => {
     //Ship elements to be placed in heading area
+    //Show ships one at a time and dont show next ship until user presses place ship button
     const patrolBoatElement = document.getElementById("patrolBoat");
     patrolBoatElement.addEventListener("dragstart", dragStartHandler);
     const submarine = document.getElementById("submarine");
     submarine.addEventListener("dragstart", dragStartHandler);
+    submarine.style.display = 'none';
     const destroyer = document.getElementById("destroyer");
     destroyer.addEventListener("dragstart", dragStartHandler);
+    destroyer.style.display = 'none';
     const battleship = document.getElementById("battleship");
     battleship.addEventListener("dragstart", dragStartHandler);
+    battleship.style.display = 'none';
     const carrier = document.getElementById("carrier");
     carrier.addEventListener("dragstart", dragStartHandler);
+    carrier.style.display = 'none';
     let bList = [patrolBoatElement, submarine, destroyer, battleship, carrier];
+    
+    function showBoat() {
+        //Show boat[0] then pop first one off and call again after place button is pressed
+        bList[0].style.display = 'block';
+    }
+    
+    const placeShipButton = document.querySelector(".placeShip");
+    placeShipButton.addEventListener("click", () => {
+        //Remove first boat from array
+        if (bList.length === 1) {
+            showBoat();
+        }
+        else {
+            bList.shift();
+            showBoat();
+        }
+        //Add class to make location look different-ship has been placed here
+        //Remove boat and make the location unplaceable
+        const shipSquares = document.getElementsByClassName("selectedSquareOne");
+        for (let i in shipSquares) {
+            if (shipSquares[i].children.length === 1) {
+                //Remove child from square/remove ship which was just dragged
+                let child = shipSquares[i].children[0];
+                child.draggable = "false";
+                let garbage = shipSquares[i].removeChild(child);
+            }
+            //shipSquares[i].classList.remove("selectedSquareOne");
+            shipSquares[i].classList.add("shipPlaced");
+            shipSquares[i].removeAttribute("*ondragover");
+            shipSquares[i].removeAttribute("*ondrop");
+        }
+    })
 
     for (let ship in bList) {
         bList[ship].addEventListener("click", () => {
@@ -76,13 +113,13 @@ window.addEventListener("DOMContentLoaded", () => {
         }
         let unselectedID = parseInt(unselected.id);
         const lastSquare = document.getElementById(`${unselectedID}`);
-        lastSquare.classList.remove('selectedSquare');
-        lastSquare.classList.add('notSelectedTwo');
+        lastSquare.classList.remove('selectedSquareOne');
+        lastSquare.classList.add('notSelected');
         game.boardOne[unselectedID - 1] = 0;
         for (let i = 0; i < boatLength; i++) {
             let square = document.getElementById(`${unselectedID + i}`)
-            square.classList.remove('selectedSquare');
-            square.classList.add('notSelectedTwo');
+            square.classList.remove('selectedSquareOne');
+            square.classList.add('notSelected');
             let boardOne = game.boardOne;
             boardOne[unselectedID + i] = 0;
         }
@@ -114,42 +151,11 @@ window.addEventListener("DOMContentLoaded", () => {
             let otherID = targetID - 1;
             ship.actualLocation[i] = otherID + i;
             let boardElement = document.getElementById(`${targetID + i}`);
-            boardElement.classList.add('selectedSquare');
+            boardElement.classList.add('selectedSquareOne');
             boardElement.classList.remove('notSelected');
             let boardOne = game.boardOne;
             boardOne[otherID] = ship;
             boardOne[otherID + i] = ship;
-        }
-        /*let shipIDs = [];
-        let targetNodes = [];
-        for (let i = 1, j = 0; i <= length; i++) {
-            let id = data + i;
-            shipIDs.push(id);
-            targetNodes.push(parseInt(e.target.id) + j);
-            j++;
-        }
-        for (let i in targetNodes) {
-            const square = document.getElementById(`${targetNodes[i]}`);
-            const shipsquare = document.getElementById(`${shipIDs[i]}`);
-            square.appendChild(shipsquare);
-            console.log(game.boardOne);
-            console.log(playerOne);
-        }*/        
-
-        if (data === "patrolBoat") {
-            const targetID = parseInt(e.originalTarget.id);
-            playerOne[0].actualLocation[0] = targetID;
-            playerOne[0].actualLocation[1] = targetID + 1;
-            let boardElement1 = document.getElementById(`${targetID}`);
-            boardElement1.classList.add('selectedSquare');
-            boardElement1.classList.remove('notSelectedTwo');
-            let boardElement2 = document.getElementById(`${targetID + 1}`);
-            boardElement2.classList.add('selectedSquare');
-            boardElement2.classList.remove('notSelectedTwo');
-            
-            let boardOne = game.boardOne;
-            boardOne[targetID] = playerOne[0];
-            boardOne[targetID + 1] = playerOne[0];
         }
     }
 })
@@ -200,8 +206,8 @@ function clearXDirection(s, location) {
     let calcLocation = location - 1;
     for (let i = 0; i < length; i++) {
         let square = document.getElementById(`${location + i}`);
-        square.classList.remove("selectedSquare");
-        square.classList.add("notSelectedTwo");
+        square.classList.remove("selectedSquareOne");
+        square.classList.add("notSelected");
         s.actualLocation[i] = 0;
         game.boardOne[location + i] = 0;
     }
@@ -212,8 +218,8 @@ function setYDirection(s, location) {
     let increment = 0;
     for (let i = 0; i < length; i++) {
         let square = document.getElementById(`${location + increment}`);
-        square.classList.add("selectedSquare");
-        square.classList.remove("notSelectedTwo");
+        square.classList.add("selectedSquareOne");
+        square.classList.remove("notSelected");
         s.actualLocation[i] = calcLocation + increment;
         game.boardOne[calcLocation + increment] = s;
         increment += 10;
@@ -242,8 +248,8 @@ function clearYDirection(s, location) {
     let increment = 0;
     for (let i = 0; i < length; i++) {
         let square = document.getElementById(`${location + increment}`);
-        square.classList.remove("selectedSquare");
-        square.classList.add("notSelectedTwo");
+        square.classList.remove("selectedSquareOne");
+        square.classList.add("notSelected");
         s.actualLocation[i] = 0;
         game.boardOne[calcLocation + increment] = 0;
         increment += 10;
@@ -255,8 +261,8 @@ function setXDirection(s, location) {
     let increment = 0;
     for (let i = 0; i < length; i++) {
         let square = document.getElementById(`${location + increment}`);
-        square.classList.add("selectedSquare");
-        square.classList.remove("notSelectedTwo");
+        square.classList.add("selectedSquareOne");
+        square.classList.remove("notSelected");
         s.actualLocation[i] = calcLocation + increment;
         game.boardOne[calcLocation + increment] = s;
         increment += 1;
