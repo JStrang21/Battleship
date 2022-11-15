@@ -4,6 +4,7 @@ import { checkForOpenSpace, placement, checkBottom, gameboardFactory, getRandom 
 //Need to document better--difficult to read after not working on it
 //Need to refactor when complete-reduce redundancy/clean up/document
 //Clearly defined class names-not a number of similar names for similar functions
+//Maybe can impelment functino which iterates over x vs y direction because I'm rewriting a lot of the same loops just slightly different
 const game = gameboardFactory();
 const playerOne = game.playerOne;
 const playerTwo = game.playerTwo;
@@ -91,6 +92,7 @@ window.addEventListener("DOMContentLoaded", () => {
     function dragStartHandler(e) {
         e.dataTransfer.setData("text/plain", e.target.id)
         e.dataTransfer.dropEffect = "move";
+        //console.log(e)
     }
 
     let unselectedOne = document.getElementsByClassName('notSelected');
@@ -104,9 +106,11 @@ window.addEventListener("DOMContentLoaded", () => {
             dropHandler(e);
         })
     }
-    for (let i = 0; i <= unselectedOne.length - 1; i++) {
-        unselectedOne[i].addEventListener('dragleave', (e) => {
-            //dragLeaveHandler(e, unselected[i]);
+    let leavingSelected = document.querySelectorAll('.p1square')
+    for (let i = 0; i <= leavingSelected.length - 1; i++) {
+        leavingSelected[i].addEventListener('dragleave', (e) => {
+            console.log(e.originalTarget)
+            dragLeaveHandler(e, leavingSelected[i]);
         })
     }
 
@@ -114,9 +118,11 @@ window.addEventListener("DOMContentLoaded", () => {
         e.preventDefault();
         const boatName = e.originalTarget.parentElement.id;
         let boatLength;
+        let targetShip;
         for (let ship in playerOne) {
             if (playerOne[ship].stringName === boatName) {
                 boatLength = playerOne[ship].shipLength.length;
+                targetShip = playerOne[ship];
             }
         }
         let unselectedID = parseInt(unselected.id);
@@ -124,12 +130,25 @@ window.addEventListener("DOMContentLoaded", () => {
         lastSquare.classList.remove('selectedSquareOne');
         lastSquare.classList.add('notSelected');
         game.boardOne[unselectedID - 1] = 0;
-        for (let i = 0; i < boatLength; i++) {
-            let square = document.getElementById(`${unselectedID + i}`)
-            square.classList.remove('selectedSquareOne');
-            square.classList.add('notSelected');
-            let boardOne = game.boardOne;
-            boardOne[unselectedID + i] = 0;
+        if (targetShip.direction === 'x') {
+            for (let i = 0; i < boatLength; i++) {
+                let square = document.getElementById(`${unselectedID + i}`)
+                square.classList.remove('selectedSquareOne');
+                square.classList.add('notSelected');
+                let boardOne = game.boardOne;
+                boardOne[unselectedID + i] = 0;
+            }
+        }
+        if (targetShip.direction === 'y') {
+            let j = 0;
+            for (let i = 0; i < boatLength; i++) {
+                let square = document.getElementById(`${unselectedID + j}`)
+                square.classList.remove('selectedSquareOne');
+                square.classList.add('notSelected');
+                let boardOne = game.boardOne;
+                boardOne[unselectedID + j] = 0;
+                j += 10;
+            }
         }
     }
 
@@ -168,6 +187,7 @@ window.addEventListener("DOMContentLoaded", () => {
     }
 })
 
+//TODO: Bug-When ship is moved while in y-direction it doesnt clear the old position
 function switchDirection(s) {
     const location = parseInt(s.parentNode.id);
     const shipName = s.id;
