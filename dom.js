@@ -3,7 +3,7 @@ import { checkForOpenSpace, placement, checkBottom, gameboardFactory, getRandom 
 //TODO
 //Need to document better--difficult to read after not working on it
 //Need to refactor when complete-reduce redundancy/clean up/document
-
+//Clearly defined class names-not a number of similar names for similar functions
 const game = gameboardFactory();
 const playerOne = game.playerOne;
 const playerTwo = game.playerTwo;
@@ -67,14 +67,10 @@ window.addEventListener("DOMContentLoaded", () => {
                 switchDirection(bList[ship]);
             })
         }
-        /*console.log(game.boardOne);
-        console.log(playerOne);
-        console.log(bList)*/
         //Add class to make location look different-ship has been placed here
         //Remove boat and make the location unplaceable
         const shipSquares = document.getElementsByClassName("selectedSquareOne");
         for (let i in shipSquares) {
-            console.log(shipSquares[i].children)
             if (shipSquares[i].children === undefined) {
                 continue;
             }
@@ -166,7 +162,7 @@ window.addEventListener("DOMContentLoaded", () => {
             boardElement.classList.add('selectedSquareOne');
             boardElement.classList.remove('notSelected');
             let boardOne = game.boardOne;
-            boardOne[otherID] = ship;
+            //boardOne[otherID] = ship;
             boardOne[otherID + i] = ship;
         }
     }
@@ -291,18 +287,34 @@ setTimeout(() => {
 
 
 
-let unselected = document.getElementsByClassName('canClick');
+/*let unselected = document.getElementsByClassName('p1ReadySquares');
 for (let i = 0; i <= unselected.length - 1; i++) {
     unselected[i].addEventListener('click', () => {
-        
+        unselected[i].innerHTML = 'X';
+        unselected[i].classList.add('wasClicked');
+        unselected[i].classList.remove("notSelected");
+        let cord = parseInt(unselected[i].id) - 1;
+        if (unselected[i].classList.contains('shipPlaced')) {
+            game.receiveAttack(cord, game.boardOne);
+            let isGameOver = game.checkIfAllSunk(playerOne);
+            if (isGameOver) {
+                console.log('PlayerOne Won the Game')
+                resetGame();
+            }
+        }
+        if (unselected[i].classList.contains('notSelected')) {
+            game.missedCoordinatesOne.push(cord);
+            unselected[i].classList.add('missed');
+        }
     })
-}
+}*/
 
 //AI ranomly clicks a square
 //TODO implement "smart" AI
+let allSquares = document.querySelectorAll(".p1square");
 function playerTwoClick() {
-    let random = getRandom(0, unselected.length);
-    unselected[random].click()
+    let random = getRandom(0, allSquares.length);
+    allSquares[random].click()
 }
 
 function playerTwoClickAdjacent(coordinates) {
@@ -311,50 +323,50 @@ function playerTwoClickAdjacent(coordinates) {
 
 //Matches ships to designated squares and returns array of where ships are located
 const startButton = document.querySelector(".startButton");
-
+let unselectedOne = [];
+let playerShipSquares = [];
 startButton.addEventListener("click", () => {
-    let shipSquares = document.getElementsByClassName('shipPlaced');
-    //TODO: maybe make check so that game wont start without all ships being placed
-    listenForHit(shipSquares);
-})
-function listenForHit(squares) {
-    for (let i = 0; i < squares.length; i++) {
-        squares[i].addEventListener("click", () => {
-            squares[i].innerHTML = 'X';
-            squares[i].classList.add('hitSquare');
-            squares[i].classList.add('wasClicked');
-            squares[i].classList.remove('shipPlaced');
-            let coord = parseInt(squares[i].id) - 1;
-            game.receiveAttack(coord, game.boardOne);
+    let playerSquares = document.querySelectorAll(".p1square");
+    playerSquares.forEach((square) => {
+        square.classList.add("p1ReadySquares")
+    })
+    //Empty squares(DONT have ships on them)
+    playerShipSquares = document.querySelectorAll(".p1ReadySquares.selectedSquareOne");
+    playerShipSquares.forEach((square) => {
+        square.addEventListener("click", () => {
+            if (square.classList.contains("wasClicked")) {
+                return;
+            }
+            let cords = square.dataset.value;
+            square.innerHTML = "X";
+            square.classList.add("hitSquare");
+            square.classList.add("wasClicked");
+            game.receiveAttack(cords, game.boardOne);
+            let isGameOver = game.checkIfAllSunk(playerOne);
+            if (isGameOver) {
+                console.log('PlayerTwo Won the Game')
+                resetGame();
+            }
         })
-    }
-}
-/*if (shipSquares.length !== 0) {
-    for (let square in shipSquares) {
-        shipSquares[square].addEventListener("click", () => {
-            console.log("hello")
+    })
+
+    unselectedOne = document.querySelectorAll(".notSelected.p1ReadySquares");
+    unselectedOne.forEach((square) => {
+        square.addEventListener("click", () => {
+            if (square.classList.contains("wasClicked")) {
+                return
+            }
+            let cords = square.dataset.value;
+            game.missedCoordinatesOne.push(cords);
+            square.classList.add("wasClicked");
+            square.classList.add("missed");
+            square.innerHTML = "X";
         })
-    }
-}*/
+    })
+    return unselectedOne;
+}) 
 
 let squaresPlayerTwo = matchSquaresToShips2(playerTwo);
-/*function matchSquaresToShips(player) {
-    let shipSquares = [];
-    for (let i = 0; i <= 99; i++) {
-        const currentElement = document.querySelector(`[data-value="${i}"`);
-        for (let ship in player) {
-            let length = player[ship].shipLength.length;
-            for (let j = 0; j <= length - 1; j++) {
-                if (i === player[ship].actualLocation[j]) {
-                    currentElement.classList.add('selectedSquare')
-                    currentElement.classList.remove('notSelected')
-                    shipSquares.push(currentElement)
-                }
-            }
-        }
-    }
-    return shipSquares
-}*/
 function matchSquaresToShips2(player) {
     let shipSquares = [];
     for (let i = 0; i <= 99; i++) {
@@ -374,26 +386,6 @@ function matchSquaresToShips2(player) {
 }
 
 //Loop to listen for clicks of ships and then to update ship/square to reflect the hit
-/*for (let i = 0; i <= squaresPlayerOne.length - 1; i++) {
-    squaresPlayerOne[i].style.backgroundColor = "green";
-    let coordinates = squaresPlayerOne[i].dataset.value;
-    let board = game.boardOne
-    let playerOne = game.playerOne
-    //squaresPlayerOne[i].innerHTML = board[coordinates].name
-    squaresPlayerOne[i].addEventListener('click', (e) => {
-        //Drop testing
-
-        squaresPlayerOne[i].innerHTML = 'X';
-        game.receiveAttack(coordinates, board);
-        squaresPlayerOne[i].classList.add('hitSquare');
-        squaresPlayerOne[i].classList.remove('canClick')
-        let isGameOver = game.checkIfAllSunk(playerOne);
-        if (isGameOver) {
-            console.log('PlayerTwo Won the Game')
-            resetGame();
-        }
-    })
-}*/
 for (let i = 0; i <= squaresPlayerTwo.length - 1; i++) {
     //squaresPlayerTwo[i].style.backgroundColor = "green";
     let coordinates = squaresPlayerTwo[i].dataset.valuetwo;
@@ -423,20 +415,6 @@ function clickSquares() {
 }
 
 //Loop which listens for a click to a square which isn't occupied by a ship and marks square as clicked
-let unselectedOne = document.getElementsByClassName('notSelected');
-for (let i = 0; i <= unselectedOne.length - 1; i++) {
-    //console.log(unselectedOne);
-    console.log(i);
-    unselectedOne[i].addEventListener('click', () => {
-        let cords = unselectedOne[i].dataset.value;
-        game.missedCoordinatesOne.push(cords)
-        unselectedOne[i].classList.add('missed');
-        unselectedOne[i].innerHTML = 'X'
-        unselectedOne[i].classList.remove('canClick');
-        unselectedOne[i].classList.remove('notSelected')
-        //console.log(game.missedCoordinatesOne);
-    })
-}
 let unselectedTwo = document.getElementsByClassName('notSelectedTwo');
 for (let i = 0; i <= unselectedTwo.length - 1; i++) {
     unselectedTwo[i].addEventListener('click', () => {

@@ -121,29 +121,6 @@ body {
     background-color: lightblue;
 }
 
-.hitSquare {
-    background-color: red !important;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: row;
-    text-align: center;
-    font-size: x-large;
-    font-weight: bold;
-
-}
-
-.missed {
-    background-color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: row;
-    text-align: center;
-    font-size: x-large;
-    font-weight: bold;
-}
-
 .side {
     background-color: lightgrey;
     display: flex;
@@ -162,4 +139,27 @@ body {
 
 .p1square.shipPlaced {
     background-color: black;
+}
+
+.missed {
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    text-align: center;
+    font-size: x-large;
+    font-weight: bold;
+}
+
+.hitSquare {
+    background-color: red !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    text-align: center;
+    font-size: x-large;
+    font-weight: bold;
+
 }
