@@ -47,6 +47,7 @@ window.addEventListener("DOMContentLoaded", () => {
     }
     
     const placeShipButton = document.querySelector(".placeShip");
+    //Once a ship is placed and button pressed then next boat shows up
     placeShipButton.addEventListener("click", () => {
         //Remove first boat from array
         if (bList.length === 1) {
@@ -173,12 +174,14 @@ function switchDirection(s) {
                     rotateY(ship, location, s);
                     //console.log(ship);
                     //console.log(game.boardOne);
+                    
                 }
             }
             if (currentDirection === 'y') {
                 if (checkX(ship, location, s)) {
                     //rotate to x
                     rotateX(ship, location, s);
+
                 }
             }
         }
