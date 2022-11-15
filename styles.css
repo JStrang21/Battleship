@@ -18,6 +18,7 @@ body {
 .infoBar {
     grid-column: 1 / -1;
     grid-row: 1 / 2;
+    height: 10rem;
 }
 
 .shipContainer {
