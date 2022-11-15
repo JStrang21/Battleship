@@ -1,5 +1,7 @@
-function shipFactory(length, name) {
+function shipFactory(length, name, sName) {
     let shipLength = [];
+    let direction = "x";
+    let stringName = sName;
     let actualLocation = [];
     let i = 0;
     while (i <= length - 1) {
@@ -28,9 +30,10 @@ function shipFactory(length, name) {
             shipLength[i] = 3;
             i++;
         }
+        console.log("Sunk!!!");
         return true;
     }
-    return {name, hit, shipLength, isSunk, actualLocation}
+    return {name, hit, shipLength, isSunk, actualLocation, stringName, direction}
 }
 
 function gameboardFactory() {
@@ -67,7 +70,7 @@ function gameboardFactory() {
     const playerOne = playerFactory();
     const playerTwo = playerFactory();
     //issue with placeships fn
-    placeShips(playerOne, boardOne);
+    //placeShips(playerOne, boardOne);
     placeShips(playerTwo, boardTwo);
 
     const receiveAttack = (coordinates, board) => {
@@ -104,11 +107,9 @@ function gameboardFactory() {
         return true
     }
 
-    return {boardOne, boardTwo, playerOne, playerTwo, receiveAttack, missedCoordinatesOne, missedCoordinatesTwo, checkIfAllSunk}
+    return {playerOne, boardOne, boardTwo, playerTwo, receiveAttack, missedCoordinatesOne, missedCoordinatesTwo, checkIfAllSunk}
 }
-let game = gameboardFactory();
-let playerOne = game.playerOne;
-//console.log(game.receiveAttack(10, game.boardOne))
+
 
 function placeShips(player, board) {
     for (let ship in player) {
@@ -119,6 +120,7 @@ function placeShips(player, board) {
             random = getRandom(0, board.length)
             check = checkForOpenSpace(board, player[ship], random);
         }
+        //console.log(check);
         if (check.space) {
             placement(board, player[ship], random, check.direction)
         }
@@ -126,39 +128,6 @@ function placeShips(player, board) {
     }
     return board
 }
-
-/*function convertCoordinates(coordinates) {
-    let splitCoords = coordinates.split("")
-    let letter = convertLetter(splitCoords[0]);
-    let number = splitCoords[1] - 1;
-    let trueCoord = Number(number + "" + letter);
-    return trueCoord
-}
-
-function convertLetter(letter) {
-    switch(letter) {
-        case 'A':
-            return 0
-        case 'B':
-            return 1
-        case 'C':
-            return 2
-        case 'D':
-            return 3
-        case 'E':
-            return 4
-        case 'F':
-            return 5
-        case 'G':
-            return 6
-        case 'H':
-            return 7
-        case 'I':
-            return 8
-        case 'J':
-            return 9
-    }
-}*/
 
 function checkForOpenSpace(board, ship, random) {
     let shipsLength = ship.shipLength.length;
@@ -305,7 +274,12 @@ function checkLeft(board, random, shipsLength) {
         return false
     }
     let increment = 0;
+    let possible = new Set([0, 10, 20, 30, 40, 50, 60, 70, 80, 90])
     for (let i = 0; i <=  shipsLength - 1; i++) {
+        let badMove = random + increment;
+        if ((i !== shipsLength - 1) && possible.has(badMove)) {
+            return false;
+        }
         if (board[random + increment] !== 0) {
             return false;
         }
@@ -321,7 +295,12 @@ function checkRight(board, random, shipsLength) {
         return false
     }
     let increment = 0;
+    let possible = new Set([9, 19, 29, 39, 49, 59, 69, 79, 89, 99])
     for (let i = 0; i <=  shipsLength - 1; i++) {
+        let badMove = random + increment;
+        if ((i !== shipsLength - 1) && possible.has(badMove)) {
+            return false;
+        }
         if (board[random + increment] !== 0) {
             return false;    
         }
@@ -340,10 +319,11 @@ function getRandom(min, max) {
 
 function playerFactory() {
     let lengths = [2, 3, 3, 4, 5];
-    let names = [1, 2, 3, 4, 5]
+    let names = [1, 2, 3, 4, 5];
+    let stringName = ["patrolBoat", "submarine", "destroyer", "battleship", "carrier"];
     let ships = [];
     for (let i in lengths) {
-        let newShip = shipFactory(lengths[i], names[i]);
+        let newShip = shipFactory(lengths[i], names[i], stringName[i]);
         ships.push(newShip);
     }
     return ships
@@ -351,7 +331,7 @@ function playerFactory() {
 
 export {
     shipFactory, playerFactory, gameboardFactory, checkForOpenSpace,
-    checkTop, checkBottom, checkLeft, checkRight, getRandom
+    checkTop, checkBottom, checkLeft, checkRight, getRandom, checkForOpenSpace, placement
 }
 
 

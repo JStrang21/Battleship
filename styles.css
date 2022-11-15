@@ -10,6 +10,7 @@ body {
     grid-template-rows: .5fr 1fr 1fr;
     gap: 2rem;
 }
+
 .resetButton {
     width: 10rem;
 }
@@ -18,6 +19,68 @@ body {
     grid-column: 1 / -1;
     grid-row: 1 / 2;
 }
+
+.shipContainer {
+    background-color: rgb(179, 215, 237);
+    height: 15rem;
+    width: 100%;  
+    gap: 1rem;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+/*.shipThree {
+    background-color: lightcoral;
+    width: 2rem;
+    height: 4rem;
+    display: grid;
+    grid-template-rows: 33% 33% 33%;
+}*/ 
+/*TODO: seperate boats/make ship container look nice*/
+/*TODO: add not dragged class so their widths dont go 100*/
+/*#patrolBoat.notDragged {
+    width: 4rem;
+    height: 2rem;
+}*/
+#patrolBoat {
+    background-color: lightgreen;
+    width: inherit;
+    height: 2rem;
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+#submarine {
+    background-color: lightgreen;
+    width: inherit;
+    height: 2rem;
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+}
+#destroyer {
+    background-color: lightgreen;
+    width: inherit;
+    height: 2rem;
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+}
+#battleship {
+    background-color: lightgreen;
+    width: inherit;
+    height: 2rem;
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+}
+#carrier {
+    background-color: lightgreen;
+    width: inherit;
+    height: 2rem;
+    display: grid;
+    /*TODO: shorthand way for columns*/
+    grid-template-columns: 20% 20% 20% 20% 20%;
+}
+/*.shipSquare {
+    background-color: lightgoldenrodyellow;
+}*/
 
 .playerOneBoard {
     justify-self: center;
@@ -34,6 +97,9 @@ body {
 .p1square {
     border: 1px solid blue;
     background-color: lightblue;
+}
+.p1square.selectedSquareOne {
+    background-color: lightgoldenrodyellow;
 }
 
 .playerTwoBoard {
@@ -87,4 +153,12 @@ body {
 }
 .boardSide {
     background-color: lightgrey;
+}
+
+.selectedSquare {
+    background-color: black;
+}
+
+.p1square.shipPlaced {
+    background-color: black;
 }
