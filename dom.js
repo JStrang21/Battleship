@@ -45,6 +45,11 @@ window.addEventListener("DOMContentLoaded", () => {
         //Show boat[0] then pop first one off and call again after place button is pressed
         bList[0].style.display = 'block';
     }
+    for (let ship in bList) {
+        bList[ship].addEventListener("click", () => {
+            switchDirection(bList[ship]);
+        })
+    }
     
     const placeShipButton = document.querySelector(".placeShip");
     placeShipButton.addEventListener("click", () => {
@@ -56,10 +61,22 @@ window.addEventListener("DOMContentLoaded", () => {
             bList.shift();
             showBoat();
         }
+        for (let ship in bList) {
+            bList[ship].addEventListener("click", () => {
+                switchDirection(bList[ship]);
+            })
+        }
+        /*console.log(game.boardOne);
+        console.log(playerOne);
+        console.log(bList)*/
         //Add class to make location look different-ship has been placed here
         //Remove boat and make the location unplaceable
         const shipSquares = document.getElementsByClassName("selectedSquareOne");
         for (let i in shipSquares) {
+            console.log(shipSquares[i].children)
+            if (shipSquares[i].children === undefined) {
+                continue;
+            }
             if (shipSquares[i].children.length === 1) {
                 //Remove child from square/remove ship which was just dragged
                 let child = shipSquares[i].children[0];
@@ -68,16 +85,10 @@ window.addEventListener("DOMContentLoaded", () => {
             }
             //shipSquares[i].classList.remove("selectedSquareOne");
             shipSquares[i].classList.add("shipPlaced");
-            shipSquares[i].removeAttribute("*ondragover");
-            shipSquares[i].removeAttribute("*ondrop");
+            //shipSquares[i].removeAttribute("*ondragover");
+            //shipSquares[i].removeAttribute("*ondrop");
         }
     })
-
-    for (let ship in bList) {
-        bList[ship].addEventListener("click", () => {
-            switchDirection(bList[ship]);
-        })
-    }
 
     //Function to control dragging
     function dragStartHandler(e) {
@@ -98,7 +109,7 @@ window.addEventListener("DOMContentLoaded", () => {
     }
     for (let i = 0; i <= unselectedOne.length - 1; i++) {
         unselectedOne[i].addEventListener('dragleave', (e) => {
-            dragLeaveHandler(e, unselected[i]);
+            //dragLeaveHandler(e, unselected[i]);
         })
     }
 
@@ -269,16 +280,13 @@ function setXDirection(s, location) {
     }
 }
 
-
-const startButton = document.querySelector(".startButton");
-startButton.addEventListener("click", () => {
-
-})
-
 setTimeout(() => {
     //console.log('hello')
     resetGame()
-}, 2000)
+    //clickSquares();
+}, 10000)
+
+
 
 let unselected = document.getElementsByClassName('canClick');
 for (let i = 0; i <= unselected.length - 1; i++) {
@@ -299,9 +307,34 @@ function playerTwoClickAdjacent(coordinates) {
 }
 
 //Matches ships to designated squares and returns array of where ships are located
-//let squaresPlayerOne = matchSquaresToShips(playerOne)
-let squaresPlayerTwo = matchSquaresToShips2(playerTwo);
+const startButton = document.querySelector(".startButton");
 
+startButton.addEventListener("click", () => {
+    let shipSquares = document.getElementsByClassName('shipPlaced');
+    //TODO: maybe make check so that game wont start without all ships being placed
+    listenForHit(shipSquares);
+})
+function listenForHit(squares) {
+    for (let i = 0; i < squares.length; i++) {
+        squares[i].addEventListener("click", () => {
+            squares[i].innerHTML = 'X';
+            squares[i].classList.add('hitSquare');
+            squares[i].classList.add('wasClicked');
+            squares[i].classList.remove('shipPlaced');
+            let coord = parseInt(squares[i].id) - 1;
+            game.receiveAttack(coord, game.boardOne);
+        })
+    }
+}
+/*if (shipSquares.length !== 0) {
+    for (let square in shipSquares) {
+        shipSquares[square].addEventListener("click", () => {
+            console.log("hello")
+        })
+    }
+}*/
+
+let squaresPlayerTwo = matchSquaresToShips2(playerTwo);
 /*function matchSquaresToShips(player) {
     let shipSquares = [];
     for (let i = 0; i <= 99; i++) {
@@ -374,21 +407,33 @@ for (let i = 0; i <= squaresPlayerTwo.length - 1; i++) {
             console.log('PlayerOne Won the Game')
             resetGame();
         }
+        playerTwoClick();
     })
 }
 
+function clickSquares() {
+    const squares = document.getElementsByClassName("p2square")
+    for (let i in squares) {
+        squares[i].click();
+        playerTwoClick();
+    }
+}
+
 //Loop which listens for a click to a square which isn't occupied by a ship and marks square as clicked
-/*let unselectedOne = document.getElementsByClassName('notSelected');
+let unselectedOne = document.getElementsByClassName('notSelected');
 for (let i = 0; i <= unselectedOne.length - 1; i++) {
+    //console.log(unselectedOne);
+    console.log(i);
     unselectedOne[i].addEventListener('click', () => {
         let cords = unselectedOne[i].dataset.value;
         game.missedCoordinatesOne.push(cords)
         unselectedOne[i].classList.add('missed');
         unselectedOne[i].innerHTML = 'X'
-        unselectedOne[i].classList.remove('canClick')
-        console.log(game.missedCoordinatesOne);
+        unselectedOne[i].classList.remove('canClick');
+        unselectedOne[i].classList.remove('notSelected')
+        //console.log(game.missedCoordinatesOne);
     })
-}*/
+}
 let unselectedTwo = document.getElementsByClassName('notSelectedTwo');
 for (let i = 0; i <= unselectedTwo.length - 1; i++) {
     unselectedTwo[i].addEventListener('click', () => {
