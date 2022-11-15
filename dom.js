@@ -283,31 +283,7 @@ setTimeout(() => {
     //console.log('hello')
     resetGame()
     //clickSquares();
-}, 10000)
-
-
-
-/*let unselected = document.getElementsByClassName('p1ReadySquares');
-for (let i = 0; i <= unselected.length - 1; i++) {
-    unselected[i].addEventListener('click', () => {
-        unselected[i].innerHTML = 'X';
-        unselected[i].classList.add('wasClicked');
-        unselected[i].classList.remove("notSelected");
-        let cord = parseInt(unselected[i].id) - 1;
-        if (unselected[i].classList.contains('shipPlaced')) {
-            game.receiveAttack(cord, game.boardOne);
-            let isGameOver = game.checkIfAllSunk(playerOne);
-            if (isGameOver) {
-                console.log('PlayerOne Won the Game')
-                resetGame();
-            }
-        }
-        if (unselected[i].classList.contains('notSelected')) {
-            game.missedCoordinatesOne.push(cord);
-            unselected[i].classList.add('missed');
-        }
-    })
-}*/
+}, 3000)
 
 //AI ranomly clicks a square
 //TODO implement "smart" AI
@@ -341,6 +317,7 @@ startButton.addEventListener("click", () => {
             square.innerHTML = "X";
             square.classList.add("hitSquare");
             square.classList.add("wasClicked");
+            square.classList.remove("p1ReadySquares");
             game.receiveAttack(cords, game.boardOne);
             let isGameOver = game.checkIfAllSunk(playerOne);
             if (isGameOver) {
@@ -360,6 +337,7 @@ startButton.addEventListener("click", () => {
             game.missedCoordinatesOne.push(cords);
             square.classList.add("wasClicked");
             square.classList.add("missed");
+            square.classList.remove("p1ReadySquares");
             square.innerHTML = "X";
         })
     })
@@ -392,7 +370,10 @@ for (let i = 0; i <= squaresPlayerTwo.length - 1; i++) {
     let board = game.boardTwo
     let playerTwo = game.playerTwo
     //squaresPlayerTwo[i].innerHTML = board[coordinates].name
-    squaresPlayerTwo[i].addEventListener('click', (e) => { 
+    squaresPlayerTwo[i].addEventListener('click', (e) => {
+        if (squaresPlayerTwo[i].classList.contains("wasClicked")) {
+            return;
+        }
         squaresPlayerTwo[i].innerHTML = 'X'
         squaresPlayerTwo[i].classList.add('hitSquare');
         squaresPlayerTwo[i].classList.add('wasClicked');
@@ -403,7 +384,10 @@ for (let i = 0; i <= squaresPlayerTwo.length - 1; i++) {
             resetGame();
         }
         playerTwoClick();
+        //Remove square from array so it can't be clicked again
+        //squaresPlayerTwo.splice(i, 1);
     })
+
 }
 
 function clickSquares() {
@@ -418,13 +402,13 @@ function clickSquares() {
 let unselectedTwo = document.getElementsByClassName('notSelectedTwo');
 for (let i = 0; i <= unselectedTwo.length - 1; i++) {
     unselectedTwo[i].addEventListener('click', () => {
+        if (unselectedTwo[i].classList.contains("wasClicked")) {
+            return;
+        }
         let cords = unselectedTwo[i].dataset.valuetwo;
         game.missedCoordinatesTwo.push(cords)
         unselectedTwo[i].classList.add('missed');
         unselectedTwo[i].innerHTML = 'X';
-        if (unselectedTwo[i].classList.contains('wasClicked')) {
-            return
-        }
         playerTwoClick();
         unselectedTwo[i].classList.add('wasClicked');
     })
