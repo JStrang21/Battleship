@@ -92,7 +92,7 @@ window.addEventListener("DOMContentLoaded", () => {
     function dragStartHandler(e) {
         e.dataTransfer.setData("text/plain", e.target.id)
         e.dataTransfer.dropEffect = "move";
-        //console.log(e)
+        console.log(e)
     }
 
     let unselectedOne = document.getElementsByClassName('notSelected');
@@ -339,7 +339,7 @@ function setXDirection(s, location) {
 setTimeout(() => {
     //console.log('hello')
     resetGame()
-    clicker();
+    //clicker();
 }, 3000)
 
 //AI ranomly clicks a square
@@ -348,10 +348,14 @@ let allSquares = document.querySelectorAll(".p1square:not(.clicked)");
 function playerTwoClick() {
     let random = getRandom(0, allSquares.length);
     if (allSquares[random].classList.contains('clicked')) {
-        console.log('hello')
+        allSquares = document.querySelectorAll(".p1square:not(.clicked)");
+        playerTwoClick();
+        console.log("hello")
     }
-    allSquares[random].click()
-    allSquares[random].classList.add('clicked');
+    else {
+        allSquares[random].click()
+        allSquares[random].classList.add('clicked');
+    }
 }
 //Simulate players clicking with async/await function to test gameplay
 //Credit: https://stackoverflow.com/questions/3583724/how-do-i-add-a-delay-in-a-javascript-loop
