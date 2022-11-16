@@ -339,27 +339,36 @@ function setXDirection(s, location) {
 setTimeout(() => {
     //console.log('hello')
     resetGame()
-    //clickSquares();
-}, 2000)
+    clicker();
+}, 3000)
 
 //AI ranomly clicks a square
 //TODO implement "smart" AI
-let allSquares = document.querySelectorAll(".p1square");
+let allSquares = document.querySelectorAll(".p1square:not(.clicked)");
 function playerTwoClick() {
     let random = getRandom(0, allSquares.length);
-    if (allSquares[random].classList.contains('clicked')) {
-        playerTwoClick();
-    }
     allSquares[random].click()
     allSquares[random].classList.add('clicked');
 }
-
-function clickSquares() {
-    const squares = document.getElementsByClassName("p2square")
-    for (let i in squares) {
-        squares[i].click();
-        playerTwoClick();
+//Simulate players clicking with async/await function to test gameplay
+//Credit: https://stackoverflow.com/questions/3583724/how-do-i-add-a-delay-in-a-javascript-loop
+let availableSquares = document.getElementsByClassName("p2square");
+const timer = ms => new Promise(res => setTimeout(res, ms))
+async function clicker() {
+    for (let square in availableSquares) {
+        availableSquares[square].click();
+        //playerTwoClick();
+        await timer(500);
     }
+}
+
+let counter = 0;
+function clickSquares() {
+    let clickSquaresTwo = document.getElementsByClassName("p2square")
+    clickSquaresTwo[counter].click();
+    playerTwoClick();
+    counter++;   
+    return counter;
 }
 
 function playerTwoClickAdjacent(coordinates) {
