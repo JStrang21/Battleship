@@ -106,49 +106,71 @@ window.addEventListener("DOMContentLoaded", () => {
             dropHandler(e);
         })
     }
-    let leavingSelected = document.querySelectorAll('.p1square')
-    for (let i = 0; i <= leavingSelected.length - 1; i++) {
-        leavingSelected[i].addEventListener('dragleave', (e) => {
-            console.log(e.originalTarget)
-            dragLeaveHandler(e, leavingSelected[i]);
+    let selectedSquare = document.getElementsByClassName('p1square')
+    for (let i = 0; i <= selectedSquare.length - 1; i++) {
+        selectedSquare[i].addEventListener('dragleave', (e) => {
+            //console.log(e.selectedSquare)
+            dragLeaveHandler(e, selectedSquare[i]);
         })
     }
 
     function dragLeaveHandler(e, unselected) {
         e.preventDefault();
-        const boatName = e.originalTarget.parentElement.id;
+        const boatName = e.originalTarget.id;
+        if (boatName === "") {
+            return;
+        }
+        
         let boatLength;
         let targetShip;
         for (let ship in playerOne) {
             if (playerOne[ship].stringName === boatName) {
                 boatLength = playerOne[ship].shipLength.length;
                 targetShip = playerOne[ship];
+                console.log(targetShip)
             }
         }
         let unselectedID = parseInt(unselected.id);
-        const lastSquare = document.getElementById(`${unselectedID}`);
+        let targetID = unselectedID - 1;
+        /*const lastSquare = document.getElementById(`${unselectedID}`);
         lastSquare.classList.remove('selectedSquareOne');
         lastSquare.classList.add('notSelected');
         game.boardOne[unselectedID - 1] = 0;
-        if (targetShip.direction === 'x') {
-            for (let i = 0; i < boatLength; i++) {
-                let square = document.getElementById(`${unselectedID + i}`)
-                square.classList.remove('selectedSquareOne');
-                square.classList.add('notSelected');
-                let boardOne = game.boardOne;
-                boardOne[unselectedID + i] = 0;
+        for (let i = 0; i < boatLength; i++) {
+            let square = document.getElementById(`${unselectedID + i}`)
+            square.classList.remove('selectedSquareOne');
+            square.classList.add('notSelected');
+            let boardOne = game.boardOne;
+            boardOne[unselectedID + i] = 0;
+        }*/
+        if (targetShip) {
+
+            game.boardOne[targetID] = 0;
+            if (targetShip.direction === 'x') {
+                //game.boardOne[unselectedID - 1] = 0;
+                for (let i = 0; i < boatLength; i++) {
+                    let square = document.getElementById(`${unselectedID + i}`)
+                    square.classList.remove('selectedSquareOne');
+                    square.classList.add('notSelected');
+                    let boardOne = game.boardOne;
+                    boardOne[targetID + i] = 0;
+                }
             }
-        }
-        if (targetShip.direction === 'y') {
-            let j = 0;
-            for (let i = 0; i < boatLength; i++) {
-                let square = document.getElementById(`${unselectedID + j}`)
-                square.classList.remove('selectedSquareOne');
-                square.classList.add('notSelected');
-                let boardOne = game.boardOne;
-                boardOne[unselectedID + j] = 0;
-                j += 10;
+            if (targetShip.direction === 'y') {
+                
+                //game.boardOne[unselectedID + 10] = 0;
+                let j = 0;
+                for (let i = 0; i < boatLength; i++) {
+                    let square = document.getElementById(`${unselectedID + j}`)
+                    square.classList.remove('selectedSquareOne');
+                    square.classList.add('notSelected');
+                    let boardOne = game.boardOne;
+                    boardOne[targetID + j] = 0;
+                    j += 10;
+                }
             }
+            console.log(playerOne);
+            console.log(game.boardOne)
         }
     }
 
@@ -174,15 +196,31 @@ window.addEventListener("DOMContentLoaded", () => {
         }
        
         const targetID = parseInt(e.originalTarget.id);
-        for (let i = 0; i < length; i++) {
+        if (ship.direction === 'x') {
             let otherID = targetID - 1;
-            ship.actualLocation[i] = otherID + i;
-            let boardElement = document.getElementById(`${targetID + i}`);
-            boardElement.classList.add('selectedSquareOne');
-            boardElement.classList.remove('notSelected');
-            let boardOne = game.boardOne;
-            //boardOne[otherID] = ship;
-            boardOne[otherID + i] = ship;
+            for (let i = 0; i < length; i++) {
+                ship.actualLocation[i] = otherID + i;
+                let boardElement = document.getElementById(`${targetID + i}`);
+                boardElement.classList.add('selectedSquareOne');
+                boardElement.classList.remove('notSelected');
+                let boardOne = game.boardOne;
+                //boardOne[otherID] = ship;
+                boardOne[otherID + i] = ship;
+            }
+        }
+        if (ship.direction === 'y') {
+            let j = 0;
+            let otherID = targetID - 1;
+            for (let i = 0; i < length; i++) {
+                ship.actualLocation[i] = otherID + j;
+                let boardElement = document.getElementById(`${targetID + j}`);
+                boardElement.classList.add('selectedSquareOne');
+                boardElement.classList.remove('notSelected');
+                let boardOne = game.boardOne;
+                //boardOne[otherID] = ship;
+                boardOne[otherID + j] = ship;
+                j += 10;
+            }
         }
     }
 })
@@ -199,6 +237,7 @@ function switchDirection(s) {
                 if (checkY(ship, location)) {
                     //rotate to y
                     rotateY(ship, location, s);
+                    ship.direction = "y";
                     //console.log(ship);
                     //console.log(game.boardOne);
                     
@@ -208,7 +247,7 @@ function switchDirection(s) {
                 if (checkX(ship, location, s)) {
                     //rotate to x
                     rotateX(ship, location, s);
-
+                    ship.direction = "x";
                 }
             }
         }
@@ -224,7 +263,6 @@ function checkY(s, location) {
         }
         increment += 10;
     }
-    s.direction = "y";
     return true;
 }
 function rotateY(s, location, square) {
@@ -265,7 +303,6 @@ function checkX(s, location) {
         }
         increment += 1;
     }
-    s.direction = "x";
     return true;
 }
 function rotateX(s, location, square) {
@@ -303,14 +340,26 @@ setTimeout(() => {
     //console.log('hello')
     resetGame()
     //clickSquares();
-}, 3000)
+}, 2000)
 
 //AI ranomly clicks a square
 //TODO implement "smart" AI
 let allSquares = document.querySelectorAll(".p1square");
 function playerTwoClick() {
     let random = getRandom(0, allSquares.length);
+    if (allSquares[random].classList.contains('clicked')) {
+        playerTwoClick();
+    }
     allSquares[random].click()
+    allSquares[random].classList.add('clicked');
+}
+
+function clickSquares() {
+    const squares = document.getElementsByClassName("p2square")
+    for (let i in squares) {
+        squares[i].click();
+        playerTwoClick();
+    }
 }
 
 function playerTwoClickAdjacent(coordinates) {
@@ -408,14 +457,6 @@ for (let i = 0; i <= squaresPlayerTwo.length - 1; i++) {
         //squaresPlayerTwo.splice(i, 1);
     })
 
-}
-
-function clickSquares() {
-    const squares = document.getElementsByClassName("p2square")
-    for (let i in squares) {
-        squares[i].click();
-        playerTwoClick();
-    }
 }
 
 //Loop which listens for a click to a square which isn't occupied by a ship and marks square as clicked
