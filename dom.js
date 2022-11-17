@@ -44,6 +44,7 @@ window.addEventListener("DOMContentLoaded", () => {
     
     function showBoat() {
         //Show boat[0] then pop first one off and call again after place button is pressed
+        //TODO: Picking up and dropping doesnt work when set to grid-leaves boat at last spot as well as drags
         bList[0].style.display = 'block';
     }
     for (let ship in bList) {
@@ -92,7 +93,7 @@ window.addEventListener("DOMContentLoaded", () => {
     function dragStartHandler(e) {
         e.dataTransfer.setData("text/plain", e.target.id)
         e.dataTransfer.dropEffect = "move";
-        console.log(e)
+        //console.log(e)
     }
 
     let unselectedOne = document.getElementsByClassName('notSelected');
@@ -117,7 +118,8 @@ window.addEventListener("DOMContentLoaded", () => {
     function dragLeaveHandler(e, unselected) {
         e.preventDefault();
         const boatName = e.originalTarget.id;
-        if (boatName === "") {
+        let lastLetter = boatName.slice(-1)
+        if (boatName === "" || typeof lastLetter === "number") {
             return;
         }
         
@@ -127,24 +129,12 @@ window.addEventListener("DOMContentLoaded", () => {
             if (playerOne[ship].stringName === boatName) {
                 boatLength = playerOne[ship].shipLength.length;
                 targetShip = playerOne[ship];
-                console.log(targetShip)
+                //console.log(targetShip)
             }
         }
         let unselectedID = parseInt(unselected.id);
         let targetID = unselectedID - 1;
-        /*const lastSquare = document.getElementById(`${unselectedID}`);
-        lastSquare.classList.remove('selectedSquareOne');
-        lastSquare.classList.add('notSelected');
-        game.boardOne[unselectedID - 1] = 0;
-        for (let i = 0; i < boatLength; i++) {
-            let square = document.getElementById(`${unselectedID + i}`)
-            square.classList.remove('selectedSquareOne');
-            square.classList.add('notSelected');
-            let boardOne = game.boardOne;
-            boardOne[unselectedID + i] = 0;
-        }*/
         if (targetShip) {
-
             game.boardOne[targetID] = 0;
             if (targetShip.direction === 'x') {
                 //game.boardOne[unselectedID - 1] = 0;
@@ -157,7 +147,6 @@ window.addEventListener("DOMContentLoaded", () => {
                 }
             }
             if (targetShip.direction === 'y') {
-                
                 //game.boardOne[unselectedID + 10] = 0;
                 let j = 0;
                 for (let i = 0; i < boatLength; i++) {
@@ -169,8 +158,8 @@ window.addEventListener("DOMContentLoaded", () => {
                     j += 10;
                 }
             }
-            console.log(playerOne);
-            console.log(game.boardOne)
+            /*console.log(playerOne);
+            console.log(game.boardOne)*/
         }
     }
 
@@ -185,13 +174,13 @@ window.addEventListener("DOMContentLoaded", () => {
         e.preventDefault();
         const data = e.dataTransfer.getData("text/plain");
         e.target.appendChild(document.getElementById(data));
-        
         let length;
         let ship;
         for (let i in playerOne) {
             if (playerOne[i].stringName === data) {
                 length = playerOne[i].shipLength.length;
                 ship = playerOne[i];
+                
             }
         }
        
@@ -227,6 +216,9 @@ window.addEventListener("DOMContentLoaded", () => {
 
 //TODO: Bug-When ship is moved while in y-direction it doesnt clear the old position
 function switchDirection(s) {
+    if (!s) {
+        return;
+    }
     const location = parseInt(s.parentNode.id);
     const shipName = s.id;
     for (let i in playerOne) {
