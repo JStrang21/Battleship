@@ -1,3 +1,7 @@
+:root {
+    --mainColor: rgb(51, 50, 50);
+    font-family:'Roboto',sans-serif;
+}
 * {
     margin: 0;
     width: 100%;
@@ -6,86 +10,145 @@
 body {
     height: 200vh;
     display: grid;
-    grid-template-columns: auto;
     grid-template-rows: .5fr 1fr 1fr;
     gap: 2rem;
+    background-color: var(--mainColor);
+    --widthPage: 100%;
 }
 
-.resetButton {
-    width: 10rem;
-}
-
+/*InfoBar container*/
 .infoBar {
     grid-column: 1 / -1;
     grid-row: 1 / 2;
-    height: 10rem;
+    height: 15rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
 }
 
+h1 {
+    text-align: center;
+    padding-top: .5rem;
+    color: rgb(255, 255, 255);
+}
+
+/*Buttons*/
+button {
+    width: 20rem;
+    color: rgb(255, 255, 255);
+    border: none;
+    background-color: transparent;
+    border: 2px solid white;
+    border-radius: 1rem;
+    height: 20rem;
+    box-sizing: border-box;
+    text-decoration:none;   
+    font-weight:800;
+    transition: all .4s;
+    transition-timing-function: ease-in;
+}
+
+button:hover {
+    background-color: white;
+    color: var(--mainColor);
+    border:  2px solid lightgray;
+}
+
+/*Ship container within infobar*/
 .shipContainer {
-    background-color: rgb(179, 215, 237);
     height: 15rem;
-    width: 100%;  
+    width: 100%;
     gap: 1rem;
     display: flex;
     justify-content: space-evenly;
 }
-
-/*.shipThree {
-    background-color: lightcoral;
-    width: 2rem;
-    height: 4rem;
-    display: grid;
-    grid-template-rows: 33% 33% 33%;
-}*/ 
+.shipContainer > div * {
+    border: 3px inset darkslategray;
+}
 /*TODO: seperate boats/make ship container look nice*/
 /*TODO: add not dragged class so their widths dont go 100*/
-/*#patrolBoat.notDragged {
-    width: 4rem;
+.shipContainer > #patrolBoat {
+    background-color: rgb(106, 106, 106);    
+    width: 16.67%;
     height: 2rem;
-}*/
-#patrolBoat {
-    background-color: lightgreen;
+    display: flex;
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+#patrolBoat:only-child {
+    background-color: rgb(106, 106, 106);    
     width: inherit;
     height: 2rem;
     display: grid;
     grid-template-columns: 50% 50%;
 }
+
+.shipContainer > #submarine {
+    background-color: rgb(106, 106, 106);    
+    width: 25%;
+    height: 2rem;
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+}
 #submarine {
-    background-color: lightgreen;
+    background-color: rgb(106, 106, 106);    
     width: inherit;
+    height: 2rem;
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+}
+
+.shipContainer > #destroyer {
+    background-color: rgb(106, 106, 106);    
+    width: 25%;
     height: 2rem;
     display: grid;
     grid-template-columns: 33% 33% 33%;
 }
 #destroyer {
-    background-color: lightgreen;
+    background-color: rgb(106, 106, 106);    
     width: inherit;
     height: 2rem;
     display: grid;
     grid-template-columns: 33% 33% 33%;
 }
+
+.shipContainer > #battleship {
+    background-color: rgb(106, 106, 106);    
+    width: 33.3%;
+    height: 2rem;
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+}
 #battleship {
-    background-color: lightgreen;
+    background-color: var(--mainColor);
     width: inherit;
     height: 2rem;
     display: grid;
     grid-template-columns: 25% 25% 25% 25%;
 }
+
+.shipContainer > #carrier {
+    background-color: rgb(106, 106, 106);    
+    width: 41.67%;
+    height: 2rem;
+    display: grid;
+    grid-template-columns: 20% 20% 20% 20% 20%;
+}
 #carrier {
-    background-color: lightgreen;
+    background-color: var(--mainColor);
     width: inherit;
     height: 2rem;
     display: grid;
     /*TODO: shorthand way for columns*/
     grid-template-columns: 20% 20% 20% 20% 20%;
 }
-/*.shipSquare {
-    background-color: lightgoldenrodyellow;
-}*/
 
+/*Board styling && square styling*/
 .playerOneBoard {
     justify-self: center;
-    background-color: lightgrey;
+    background-color: var(--mainColor);
     grid-column: 1 / -1;
     grid-row: 2 / 3;
     width: 90%;
@@ -99,13 +162,14 @@ body {
     border: 1px solid blue;
     background-color: lightblue;
 }
-.p1square.selectedSquareOne {
-    background-color: lightgoldenrodyellow;
+.selectedSquareOne {
+    background-color: rgb(106, 106, 106);
 }
 
 .playerTwoBoard {
     justify-self: center;
     background-color: lightgrey;
+
     grid-column: 1 / -1;
     grid-row: 3 / -1;
 
@@ -120,6 +184,47 @@ body {
     border: 1px solid blue;
     background-color: lightblue;
 }
+.p1square, .p2square {
+    border: 2px solid rgb(49, 131, 212);
+}
+
+.side, .boardSide {
+    background-color: var(--mainColor);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: large;
+    font-weight: bold;
+    color: rgb(255, 255, 255);
+}/*
+.boardSide {
+    background-color: lightgrey;
+}*/
+
+.selectedSquare {
+    background-color: rgb(106, 106, 106);
+}
+
+.p1square.shipPlaced {
+    background-color: darkgray;
+    border: 5px ridge gray;
+    border-right: 5px ridge gray;
+}
+
+.shipSquare {
+
+}
+
+.missed {
+    background-color: rgb(25, 88, 121);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    text-align: center;
+    font-size: x-large;
+    font-weight: bold;
+}
 
 .hitSquare {
     background-color: red !important;
@@ -130,36 +235,7 @@ body {
     text-align: center;
     font-size: x-large;
     font-weight: bold;
-
 }
 
-.missed {
-    background-color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: row;
-    text-align: center;
-    font-size: x-large;
-    font-weight: bold;
-}
 
-.side {
-    background-color: lightgrey;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: large;
-    font-weight: bold;
-}
-.boardSide {
-    background-color: lightgrey;
-}
 
-.selectedSquare {
-    background-color: black;
-}
-
-.p1square.shipPlaced {
-    background-color: black;
-}
