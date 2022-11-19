@@ -163,7 +163,7 @@ button:hover {
     background-color: lightblue;
 }
 .selectedSquareOne {
-    background-color: rgb(106, 106, 106);    
+    background-color: rgb(106, 106, 106);
 }
 
 .playerTwoBoard {
@@ -185,7 +185,7 @@ button:hover {
     background-color: lightblue;
 }
 .p1square, .p2square {
-    border: 2px inset darkblue;
+    border: 2px solid rgb(49, 131, 212);
 }
 
 .side, .boardSide {
@@ -202,7 +202,7 @@ button:hover {
 }*/
 
 .selectedSquare {
-    background-color: darkgray;
+    background-color: rgb(106, 106, 106);
 }
 
 .p1square.shipPlaced {
