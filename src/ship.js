@@ -1,3 +1,5 @@
+
+
 function shipFactory(length, name, sName) {
     let shipLength = [];
     let direction = "x";
