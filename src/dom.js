@@ -4,7 +4,7 @@ import {
   checkBottom,
   gameboardFactory,
   getRandom,
-} from "./ship.js";
+} from "../ship.js";
 
 //TODO
 //Add option to randomly place ships
