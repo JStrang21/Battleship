@@ -241,6 +241,12 @@ p1square:hover, p1square:focus {
     background-color: lightgreen;
 }
 
+.shipPlaced{
+    background-color: rgb(106, 106, 106) !important;
+}
+.selectedSquareOne {
+    background-color: rgb(106, 106, 106) !important;
+}
 
 
 

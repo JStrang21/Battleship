@@ -119,14 +119,24 @@ window.addEventListener("DOMContentLoaded", () => {
       dragLeaveHandler(e, selectedSquare[i]);
       let boatName = bList[0].id;
       let boatLength;
+      let shipDirection;
       for (let ship in playerOne) {
         if (playerOne[ship].stringName === boatName) {
           boatLength = playerOne[ship].shipLength.length;
+          shipDirection = playerOne[ship].direction;
         }
       }
-      
-      for (let j = 0; j < boatLength; j++) {
-        selectedSquare[i + j].style.backgroundColor = 'lightBlue';
+      if (shipDirection === 'x') {
+        for (let j = 0; j < boatLength; j++) {
+          selectedSquare[i + j].style.backgroundColor = 'lightBlue';
+        }
+      }
+      else if (shipDirection === 'y') {
+
+        for (let j = 0, l = 0; j < boatLength; j++) {
+          selectedSquare[i + l].style.backgroundColor = 'lightBlue';
+          l += 10;
+        }
       }
     });
   }
@@ -173,7 +183,7 @@ window.addEventListener("DOMContentLoaded", () => {
           let square = document.getElementById(`${unselectedID + j}`);
           square.classList.remove("selectedSquareOne");
           square.classList.add("notSelected");
-          //square.style.backgroundColor = "lightblue";
+         //square.style.backgroundColor = "lightblue";
           let boardOne = game.boardOne;
           boardOne[targetID + j] = 0;
           j += 10;
@@ -205,10 +215,21 @@ window.addEventListener("DOMContentLoaded", () => {
     if (isEmpty) {
       let target = parseInt(targetLocation)
       const shipLength = ship.shipLength.length;
-      for (let i = 0; i < shipLength; i++) {
-        let targetId = target + i;
-        const element = document.getElementById(targetId);
-        element.style.backgroundColor = 'lightgreen';
+      if (ship.direction === 'x') {
+        for (let i = 0; i < shipLength; i++) {
+          let targetId = target + i;
+          const element = document.getElementById(targetId);
+          element.style.backgroundColor = 'lightgreen';
+        }
+      }
+      else if (ship.direction === 'y') {
+        let j = 0;
+        for (let i = 0; i < shipLength; i++) {
+          let targetId = target + j;
+          j += 10;
+          const element = document.getElementById(targetId);
+          element.style.backgroundColor = 'lightgreen';
+        }
       }
     }
     if (!isEmpty) {
@@ -315,6 +336,7 @@ function clearXDirection(s, location) {
     let square = document.getElementById(`${location + i}`);
     square.classList.remove("selectedSquareOne");
     square.classList.add("notSelected");
+    square.style.backgroundColor = 'lightblue'
     s.actualLocation[i] = 0;
     game.boardOne[location + i] = 0;
   }
@@ -357,6 +379,7 @@ function clearYDirection(s, location) {
     let square = document.getElementById(`${location + increment}`);
     square.classList.remove("selectedSquareOne");
     square.classList.add("notSelected");
+    square.style.backgroundColor = 'lightblue'
     s.actualLocation[i] = 0;
     game.boardOne[calcLocation + increment] = 0;
     increment += 10;
