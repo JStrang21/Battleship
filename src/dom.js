@@ -5,26 +5,26 @@ import {
   gameboardFactory,
   getRandom,
 } from "./ship.js";
-
+//import switchDirection from "./util/checkAndPlace.js";
+import checkEmpty from './util/checkEmpty.js';
 
 //TODO
 //Add option to randomly place ships
 //Make smarter AI
 //Need to document better--difficult to read after not working on it
-//Need to refactor when complete-reduce redundancy/clean up/document
 //Clearly defined class names-not a number of similar names for similar functions
 //Maybe can impelment functino which iterates over x vs y direction because I'm rewriting a lot of the same loops just slightly different
+
+//TODO: don't allow ships to be placed over edges
+//TODO: Dont allow ships to be placed over each other
+
+//Factory which creates a game object which consists of the players, ships, and boards-imported from ship.js
 const game = gameboardFactory();
 const playerOne = game.playerOne;
 const playerTwo = game.playerTwo;
 /*TODO*/
 function resetGame() {}
 
-//Maybe rather than drag and drop-implement mini pop up board and go through list of boats and user and can hover over board and place on highlighted area
-//https://michalosman.github.io/battleship/
-function miniBoard() {
-  let p1 = game.playerOne;
-}
 //Choose one boat at a time and use arrow to point in which direction you want it to face
 //Then when placing boat use :hover for board squares to highlight which element it will be placed on
 
@@ -47,15 +47,15 @@ window.addEventListener("DOMContentLoaded", () => {
   carrier.addEventListener("dragstart", dragStartHandler);
   carrier.style.display = "none";
   let bList = [patrolBoatElement, submarine, destroyer, battleship, carrier];
-
+  
   function showBoat() {
     //Show boat[0] then pop first one off and call again after place button is pressed
     //TODO: Picking up and dropping doesnt work when set to grid-leaves boat at last spot as well as drags
-    bList[0].style.display = "block";
+    bList[0].style.display = "block";  
   }
   for (let ship in bList) {
     bList[ship].addEventListener("click", () => {
-      switchDirection(bList[ship]);
+      switchDirection(bList[ship], game);
     });
   }
 
@@ -98,12 +98,12 @@ window.addEventListener("DOMContentLoaded", () => {
   function dragStartHandler(e) {
     e.dataTransfer.setData("text/plain", e.target.id);
     e.dataTransfer.dropEffect = "move";
-    //console.log(e)
   }
 
   let unselectedOne = document.getElementsByClassName("notSelected");
   for (let i = 0; i <= unselectedOne.length - 1; i++) {
     unselectedOne[i].addEventListener("dragover", (e) => {
+      //console.log(e)
       dragOverHandler(e);
     });
   }
@@ -117,17 +117,29 @@ window.addEventListener("DOMContentLoaded", () => {
     selectedSquare[i].addEventListener("dragleave", (e) => {
       //console.log(e.selectedSquare)
       dragLeaveHandler(e, selectedSquare[i]);
+      let boatName = bList[0].id;
+      let boatLength;
+      for (let ship in playerOne) {
+        if (playerOne[ship].stringName === boatName) {
+          boatLength = playerOne[ship].shipLength.length;
+        }
+      }
+      
+      for (let j = 0; j < boatLength; j++) {
+        selectedSquare[i + j].style.backgroundColor = 'lightBlue';
+      }
     });
   }
 
   function dragLeaveHandler(e, unselected) {
     e.preventDefault();
+    //TODO hover effect    
     const boatName = e.originalTarget.id;
     let lastLetter = boatName.slice(-1);
     if (boatName === "" || typeof lastLetter === "number") {
       return;
     }
-
+    //Get boat from e
     let boatLength;
     let targetShip;
     for (let ship in playerOne) {
@@ -137,8 +149,10 @@ window.addEventListener("DOMContentLoaded", () => {
         //console.log(targetShip)
       }
     }
+    //////
     let unselectedID = parseInt(unselected.id);
     let targetID = unselectedID - 1;
+    
     if (targetShip) {
       game.boardOne[targetID] = 0;
       if (targetShip.direction === "x") {
@@ -147,6 +161,7 @@ window.addEventListener("DOMContentLoaded", () => {
           let square = document.getElementById(`${unselectedID + i}`);
           square.classList.remove("selectedSquareOne");
           square.classList.add("notSelected");
+          //square.style.backgroundColor = "lightblue";
           let boardOne = game.boardOne;
           boardOne[targetID + i] = 0;
         }
@@ -158,6 +173,7 @@ window.addEventListener("DOMContentLoaded", () => {
           let square = document.getElementById(`${unselectedID + j}`);
           square.classList.remove("selectedSquareOne");
           square.classList.add("notSelected");
+          //square.style.backgroundColor = "lightblue";
           let boardOne = game.boardOne;
           boardOne[targetID + j] = 0;
           j += 10;
@@ -172,6 +188,32 @@ window.addEventListener("DOMContentLoaded", () => {
   function dragOverHandler(e) {
     e.preventDefault();
     e.dataTransfer.dropEffect = "move";
+    const data = e.dataTransfer.getData("text/plain");
+    //TODO: add hover effect
+    //e.target.style.backgroundColor = "green";
+    //const ship = document.getElementById(data);
+    const targetLocation = e.originalTarget.id;
+    const shipName = data;
+    let ship;
+    for (let i in playerOne) {
+        if (playerOne[i].stringName === shipName) {
+            ship = playerOne[i];
+        }
+    }
+    //Check if squares in direction of ship are empty and if empty then show green else red
+    const isEmpty = checkEmpty(ship, game, targetLocation);
+    if (isEmpty) {
+      let target = parseInt(targetLocation)
+      const shipLength = ship.shipLength.length;
+      for (let i = 0; i < shipLength; i++) {
+        let targetId = target + i;
+        const element = document.getElementById(targetId);
+        element.style.backgroundColor = 'lightgreen';
+      }
+    }
+    if (!isEmpty) {
+      //console.log('no')
+    }
   }
 
   //Fn for dropping ship onto board squares
@@ -187,7 +229,7 @@ window.addEventListener("DOMContentLoaded", () => {
         ship = playerOne[i];
       }
     }
-
+    //console.log(game.boardOne)
     const targetID = parseInt(e.originalTarget.id);
     if (ship.direction === "x") {
       let otherID = targetID - 1;
@@ -229,6 +271,7 @@ function switchDirection(s) {
     if (playerOne[i].stringName === shipName) {
       const ship = playerOne[i];
       const currentDirection = ship.direction;
+      document.querySelector(".placeShip").style.display = 'block';
       if (currentDirection === "x") {
         if (checkY(ship, location)) {
           //rotate to y
@@ -253,7 +296,8 @@ function checkY(s, location) {
   let increment = 10;
   //Might have to start i=10 bc first ship square remains stationary
   for (let i = 0; i < s.shipLength.length; i++) {
-    if (board[location + increment] !== 0) {
+    if (board[location + increment] !== 0) { 
+      document.querySelector(".placeShip").style.display = 'none';
       return false;
     }
     increment += 10;
@@ -294,6 +338,7 @@ function checkX(s, location) {
   let increment = 1;
   for (let i = 0; i < s.shipLength.length; i++) {
     if (board[location + increment] !== 0) {
+      document.querySelector(".placeShip").style.display = 'none';
       return false;
     }
     increment += 1;
@@ -483,6 +528,8 @@ for (let i = 0; i <= unselectedTwo.length - 1; i++) {
     unselectedTwo[i].classList.add("wasClicked");
   });
 }
+
+
 
 //Converts array integer to board coordinate ex: 0 = A1/8 = I1
 //Then display those in box at above player two

@@ -237,5 +237,10 @@ button:hover {
     font-weight: bold;
 }
 
+p1square:hover, p1square:focus {
+    background-color: lightgreen;
+}
+
+
 
 
