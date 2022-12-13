@@ -104,9 +104,35 @@ window.addEventListener("DOMContentLoaded", () => {
       dragOverHandler(e);
     });
   }
+  let dropAllowed;
+  let currentShip;
+  let previousSquareID;
   for (let i = 0; i <= unselectedOne.length - 1; i++) {
     unselectedOne[i].addEventListener("drop", (e) => {
-      dropHandler(e);
+      if (dropAllowed) {
+        dropHandler(e);
+      }
+      else {
+        let shipLength = currentShip.shipLength.length;
+        if (currentShip.direction === 'x') {
+          for (let i = 0; i < shipLength; i++) {
+             const square = document.getElementById(previousSquareID + i);
+             square.style.backgroundColor = 'lightblue';
+          }
+        }
+        else if (currentShip.direction === 'y') {
+          for (let i = 0, j = 0; i < shipLength; i++) {
+             const square = document.getElementById(previousSquareID + j);
+             square.style.backgroundColor = 'lightblue';
+             j += 10;
+          }
+        }
+        console.log(game.boardOne)
+        let shipName = currentShip.stringName;
+        let shipElement = document.getElementById(shipName);
+        let shipContainer = document.querySelector('.shipContainer');
+        shipContainer.prepend(shipElement);
+      }
     });
   }
   let selectedSquare = document.getElementsByClassName("p1square");
@@ -209,12 +235,17 @@ window.addEventListener("DOMContentLoaded", () => {
             ship = playerOne[i];
         }
     }
+    currentShip = ship;
     //Check if squares in direction of ship are empty and if empty then show green else red
     const isEmpty = checkEmpty(ship, game, targetLocation);
+
     let target = parseInt(targetLocation)
+    previousSquareID = target;
+
     const shipLength = ship.shipLength.length;
     const placeButton = document.querySelector(".placeShip");
     if (isEmpty === true) {
+      dropAllowed = true;
       placeButton.style.display = 'block';
       if (ship.direction === 'x') {
         for (let i = 0; i < shipLength; i++) {
@@ -234,6 +265,7 @@ window.addEventListener("DOMContentLoaded", () => {
     }
     //If square is filled/not placeable then red highlighting
     if (isEmpty === false) {
+      dropAllowed = false;
       placeButton.style.display = 'none';
       if (ship.direction === 'x') {
         for (let i = 0; i < shipLength; i++) {
@@ -425,15 +457,17 @@ setTimeout(() => {
 //TODO implement "smart" AI
 let allSquares = document.querySelectorAll(".p1square:not(.clicked)");
 function playerTwoClick() {
-  let random = getRandom(0, allSquares.length);
-  if (allSquares[random].classList.contains("clicked")) {
-    allSquares = document.querySelectorAll(".p1square:not(.clicked)");
-    playerTwoClick();
-    console.log("hello");
-  } else {
-    allSquares[random].click();
-    allSquares[random].classList.add("clicked");
-  }
+  setTimeout(() => {
+    let random = getRandom(0, allSquares.length);
+    if (allSquares[random].classList.contains("clicked")) {
+      allSquares = document.querySelectorAll(".p1square:not(.clicked)");
+      playerTwoClick();
+      console.log("hello");
+    } else {
+      allSquares[random].click();
+      allSquares[random].classList.add("clicked");
+    }
+  }, 750)
 }
 //Simulate players clicking with async/await function to test gameplay
 //Credit: https://stackoverflow.com/questions/3583724/how-do-i-add-a-delay-in-a-javascript-loop

@@ -32,10 +32,10 @@ function checkEmpty(ship, game, targetLocation) {
 
 function checkY(s, location, board) {
     let increment = 0;
-    console.log(location)
+    let boardLocation = location - 1;
     //Might have to start i=10 bc first ship square remains stationary
-    for (let i = 0; i < s.shipLength.length - 1; i++) {
-      if (board[location + increment] !== 0) { 
+    for (let i = 0; i < s.shipLength.length; i++) {
+      if (board[boardLocation + increment] !== 0) { 
         return false;
       }
       increment += 10;
@@ -45,10 +45,9 @@ function checkY(s, location, board) {
 
 function checkX(s, location, board) {
     let increment = 0;
-    console.log(location)
-
+    let boardLocation = location - 1;
     for (let i = 0; i < s.shipLength.length; i++) {
-      if (board[location + increment] !== 0) {
+      if (board[boardLocation + increment] !== 0) {
         return false;
       }
       increment += 1;
