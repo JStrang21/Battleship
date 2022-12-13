@@ -87,10 +87,7 @@ window.addEventListener("DOMContentLoaded", () => {
         child.draggable = "false";
         let garbage = shipSquares[i].removeChild(child);
       }
-      //shipSquares[i].classList.remove("selectedSquareOne");
       shipSquares[i].classList.add("shipPlaced");
-      //shipSquares[i].removeAttribute("*ondragover");
-      //shipSquares[i].removeAttribute("*ondrop");
     }
   });
 
@@ -132,7 +129,6 @@ window.addEventListener("DOMContentLoaded", () => {
         }
       }
       else if (shipDirection === 'y') {
-
         for (let j = 0, l = 0; j < boatLength; j++) {
           selectedSquare[i + l].style.backgroundColor = 'lightBlue';
           l += 10;
@@ -203,6 +199,9 @@ window.addEventListener("DOMContentLoaded", () => {
     //e.target.style.backgroundColor = "green";
     //const ship = document.getElementById(data);
     const targetLocation = e.originalTarget.id;
+    if (targetLocation.length > 3) {
+      return;
+    }
     const shipName = data;
     let ship;
     for (let i in playerOne) {
@@ -212,9 +211,11 @@ window.addEventListener("DOMContentLoaded", () => {
     }
     //Check if squares in direction of ship are empty and if empty then show green else red
     const isEmpty = checkEmpty(ship, game, targetLocation);
-    if (isEmpty) {
-      let target = parseInt(targetLocation)
-      const shipLength = ship.shipLength.length;
+    let target = parseInt(targetLocation)
+    const shipLength = ship.shipLength.length;
+    const placeButton = document.querySelector(".placeShip");
+    if (isEmpty === true) {
+      placeButton.style.display = 'block';
       if (ship.direction === 'x') {
         for (let i = 0; i < shipLength; i++) {
           let targetId = target + i;
@@ -223,8 +224,7 @@ window.addEventListener("DOMContentLoaded", () => {
         }
       }
       else if (ship.direction === 'y') {
-        let j = 0;
-        for (let i = 0; i < shipLength; i++) {
+        for (let i = 0, j = 0; i < shipLength; i++) {
           let targetId = target + j;
           j += 10;
           const element = document.getElementById(targetId);
@@ -232,8 +232,24 @@ window.addEventListener("DOMContentLoaded", () => {
         }
       }
     }
-    if (!isEmpty) {
-      //console.log('no')
+    //If square is filled/not placeable then red highlighting
+    if (isEmpty === false) {
+      placeButton.style.display = 'none';
+      if (ship.direction === 'x') {
+        for (let i = 0; i < shipLength; i++) {
+          let targetId = target + i;
+          const element = document.getElementById(targetId);
+          element.style.backgroundColor = 'red';
+        }
+      }
+      else if (ship.direction === 'y') {
+        for (let i = 0, j = 0; i < shipLength; i++) {
+          let targetId = target + j;
+          j += 10;
+          const element = document.getElementById(targetId);
+          element.style.backgroundColor = 'red';
+        }
+      }
     }
   }
 
