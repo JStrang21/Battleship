@@ -588,3 +588,5 @@ for (let i = 0; i <= unselectedTwo.length - 1; i++) {
     unselectedTwo[i].classList.add("wasClicked");
   });
 }
+
+export { game }
