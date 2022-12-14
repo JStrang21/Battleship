@@ -8,6 +8,8 @@ import {
 //import switchDirection from "./util/checkAndPlace.js";
 import checkEmpty from './util/checkEmpty.js';
 import styleBoardSquares from './util/styleBoard.js';
+import aiMove from './util/ai.js';
+
 
 //TODO
 //Maybe create option to save a favorite layout-user creates profile and layout is saved to local storage
@@ -445,29 +447,22 @@ function setXDirection(s, location) {
   }
 }
 
-setTimeout(() => {
-  //console.log('hello')
-  resetGame();
-  //clicker();
-}, 20000);
-
-//AI ranomly clicks a square
 //TODO implement "smart" AI
-let allSquares = document.querySelectorAll(".p1square:not(.clicked)");
 function playerTwoClick() {
   //SetTimeout to delay ai turn
   setTimeout(() => {
-    let random = getRandom(0, allSquares.length);
+    aiMove();
+    /*let random = getRandom(0, allSquares.length);
     if (allSquares[random].classList.contains("clicked")) {
       allSquares = document.querySelectorAll(".p1square:not(.clicked)");
       playerTwoClick();
-      console.log("hello");
     } else {
       allSquares[random].click();
       allSquares[random].classList.add("clicked");
-    }
+    }*/
   }, 100)
 }
+
 //Simulate players clicking with async/await function to test gameplay
 //Credit: https://stackoverflow.com/questions/3583724/how-do-i-add-a-delay-in-a-javascript-loop
 let availableSquares = document.getElementsByClassName("p2square");
@@ -480,19 +475,9 @@ async function clicker() {
   }
 }
 setTimeout(() => {
-  //clicker()
+  const square = document.getElementById(1);
+  square.click()
 }, 5000);
-
-let counter = 0;
-function clickSquares() {
-  let clickSquaresTwo = document.getElementsByClassName("p2square");
-  clickSquaresTwo[counter].click();
-  playerTwoClick();
-  counter++;
-  return counter;
-}
-
-function playerTwoClickAdjacent(coordinates) {}
 
 //Matches ships to designated squares and returns array of where ships are located
 const startButton = document.querySelector(".startButton");
@@ -603,9 +588,3 @@ for (let i = 0; i <= unselectedTwo.length - 1; i++) {
     unselectedTwo[i].classList.add("wasClicked");
   });
 }
-
-
-
-//Converts array integer to board coordinate ex: 0 = A1/8 = I1
-//Then display those in box at above player two
-function convertArrayCordToBoardCord(missedCoordinates) {}
