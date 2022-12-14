@@ -332,7 +332,7 @@ function playerFactory() {
 }
 
 export {
-    shipFactory, playerFactory, gameboardFactory, checkForOpenSpace,
+    shipFactory, playerFactory, gameboardFactory,
     checkTop, checkBottom, checkLeft, checkRight, getRandom, checkForOpenSpace, placement
 }
 

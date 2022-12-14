@@ -63,9 +63,9 @@ button:hover {
     display: flex;
     justify-content: space-evenly;
 }
-.shipContainer > div * {
+/*.shipContainer > div * {
     border: 3px inset darkslategray;
-}
+}*/
 /*TODO: seperate boats/make ship container look nice*/
 /*TODO: add not dragged class so their widths dont go 100*/
 .shipContainer > #patrolBoat {
@@ -145,6 +145,14 @@ button:hover {
     grid-template-columns: 20% 20% 20% 20% 20%;
 }
 
+/*Styling how ships look on board*/
+.shipSquareLeft {
+    z-index: 1;
+    border-top-left-radius: 10px !important;
+    border-bottom-left-radius: 10px !important;  
+}
+
+
 /*Board styling && square styling*/
 .playerOneBoard {
     justify-self: center;
@@ -196,10 +204,7 @@ button:hover {
     font-size: large;
     font-weight: bold;
     color: rgb(255, 255, 255);
-}/*
-.boardSide {
-    background-color: lightgrey;
-}*/
+}
 
 .selectedSquare {
     background-color: rgb(106, 106, 106);
@@ -211,12 +216,8 @@ button:hover {
     border-right: 5px ridge gray;
 }
 
-.shipSquare {
-
-}
-
 .missed {
-    background-color: rgb(25, 88, 121);
+    background-color: rgb(25, 88, 121) !important;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -237,13 +238,6 @@ button:hover {
     font-weight: bold;
 }
 
-p1square:hover, p1square:focus {
-    background-color: lightgreen;
-}
-
-.shipPlaced{
-    background-color: rgb(106, 106, 106) !important;
-}
 .selectedSquareOne {
     background-color: rgb(106, 106, 106) !important;
 }

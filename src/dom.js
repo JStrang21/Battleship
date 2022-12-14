@@ -7,16 +7,16 @@ import {
 } from "./ship.js";
 //import switchDirection from "./util/checkAndPlace.js";
 import checkEmpty from './util/checkEmpty.js';
+import styleBoardSquares from './util/styleBoard.js';
 
 //TODO
+//Maybe create option to save a favorite layout-user creates profile and layout is saved to local storage
+//Finish including webpack for cross-browser support
 //Add option to randomly place ships
 //Make smarter AI
 //Need to document better--difficult to read after not working on it
-//Clearly defined class names-not a number of similar names for similar functions
 //Maybe can impelment functino which iterates over x vs y direction because I'm rewriting a lot of the same loops just slightly different
-
-//TODO: don't allow ships to be placed over edges
-//TODO: Dont allow ships to be placed over each other
+//Don't allow ships to be placed over edges
 
 //Factory which creates a game object which consists of the players, ships, and boards-imported from ship.js
 const game = gameboardFactory();
@@ -24,9 +24,6 @@ const playerOne = game.playerOne;
 const playerTwo = game.playerTwo;
 /*TODO*/
 function resetGame() {}
-
-//Choose one boat at a time and use arrow to point in which direction you want it to face
-//Then when placing boat use :hover for board squares to highlight which element it will be placed on
 
 //Ships elements to be dragged and dropped
 window.addEventListener("DOMContentLoaded", () => {
@@ -85,7 +82,6 @@ window.addEventListener("DOMContentLoaded", () => {
         //Remove child from square/remove ship which was just dragged
         let child = shipSquares[i].children[0];
         child.draggable = "false";
-        let garbage = shipSquares[i].removeChild(child);
       }
       shipSquares[i].classList.add("shipPlaced");
     }
@@ -104,6 +100,7 @@ window.addEventListener("DOMContentLoaded", () => {
       dragOverHandler(e);
     });
   }
+
   let dropAllowed;
   let currentShip;
   let previousSquareID;
@@ -127,11 +124,11 @@ window.addEventListener("DOMContentLoaded", () => {
              j += 10;
           }
         }
-        console.log(game.boardOne)
         let shipName = currentShip.stringName;
         let shipElement = document.getElementById(shipName);
         let shipContainer = document.querySelector('.shipContainer');
         shipContainer.prepend(shipElement);
+        currentShip.direction = 'x';
       }
     });
   }
@@ -326,6 +323,7 @@ window.addEventListener("DOMContentLoaded", () => {
         j += 10;
       }
     }
+    styleBoardSquares(ship, targetID, game.boardOne);
   }
 });
 
@@ -457,6 +455,7 @@ setTimeout(() => {
 //TODO implement "smart" AI
 let allSquares = document.querySelectorAll(".p1square:not(.clicked)");
 function playerTwoClick() {
+  //SetTimeout to delay ai turn
   setTimeout(() => {
     let random = getRandom(0, allSquares.length);
     if (allSquares[random].classList.contains("clicked")) {
@@ -467,7 +466,7 @@ function playerTwoClick() {
       allSquares[random].click();
       allSquares[random].classList.add("clicked");
     }
-  }, 750)
+  }, 100)
 }
 //Simulate players clicking with async/await function to test gameplay
 //Credit: https://stackoverflow.com/questions/3583724/how-do-i-add-a-delay-in-a-javascript-loop
@@ -477,9 +476,12 @@ async function clicker() {
   for (let square in availableSquares) {
     availableSquares[square].click();
     //playerTwoClick();
-    await timer(500);
+    await timer(100);
   }
 }
+setTimeout(() => {
+  //clicker()
+}, 5000);
 
 let counter = 0;
 function clickSquares() {
